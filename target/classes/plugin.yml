@@ -1,0 +1,23 @@
+name: battleroyale
+version: 1.0.0
+load: POSTWORLD
+author: Klnsyf Sun
+main: com.klnsyf.battleroyale.BattleRoyaleSetup
+database: false
+depend: 
+prefix: Battle Royale
+softdepend: 
+loadbefore:
+commands:
+  battleroyale:
+    aliases: br
+permissions:
+  battleroyale.*:
+    children:
+      battleroyale.main: true
+      battleroyale.join: true
+  battleroyale.main:
+    default: op
+  battleroyale.join:
+    default: true
+    
