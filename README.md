@@ -1,2 +1,2 @@
 # Battle Royale
-[Wiki](https://github.com/Klnsyf-Sun/Battle-Royale/wiki)
+![Battle Royale](https://klnsyf-sun.github.io/img/Battle-Royale.png)
