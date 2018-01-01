@@ -10,6 +10,7 @@ import com.klnsyf.battleroyale.listeners.AnimalProtection;
 import com.klnsyf.battleroyale.listeners.AutoLapis;
 import com.klnsyf.battleroyale.listeners.AutoRespawn;
 import com.klnsyf.battleroyale.listeners.GameEnd;
+import com.klnsyf.battleroyale.listeners.GameJoin;
 import com.klnsyf.battleroyale.listeners.GameLoad;
 import com.klnsyf.battleroyale.listeners.GamePreset;
 import com.klnsyf.battleroyale.listeners.GameProtection;
@@ -59,6 +60,7 @@ public class Config {
 	private int accelerateProtectTime;
 	// others
 	private ArrayList<Player> players;
+	private ArrayList<Double> spreadLocation;
 	private ArrayList<Player> alivePlayers;
 	private WorldBorderHandler worldBorderHandler;
 	private boolean isWorldBorderShrinking;
@@ -67,6 +69,7 @@ public class Config {
 	private AutoRespawn autoRespawn;
 	private GameEnd gameEnd;
 	private GameLoad gameLoad;
+	private GameJoin gameJoin;
 	private GamePreset gamePreset;
 	private GameProtection gameProtection;
 	private GameStart gameStart;
@@ -86,6 +89,7 @@ public class Config {
 		battleRoyale.setConfig(this);
 		new ConfigHandler(battleRoyale).loadConfig();
 		this.players = new ArrayList<Player>();
+		this.spreadLocation = new ArrayList<Double>();
 		this.autoLapis = new AutoLapis(battleRoyale);
 		this.autoRespawn = new AutoRespawn(battleRoyale);
 		this.gameEnd = new GameEnd(battleRoyale);
@@ -102,11 +106,13 @@ public class Config {
 		this.oreAutoMelt = new OreAutoMelt(battleRoyale);
 		this.worldBorderStopShrink = new WorldBorderStopShrink(battleRoyale);
 		this.summonBlaze = new SummonBlaze(battleRoyale);
+		this.gameJoin = new GameJoin(battleRoyale);
 	}
 
 	public void roundReset() {
 		this.players = new ArrayList<Player>();
 		this.isWorldBorderShrinking = false;
+		this.spreadLocation = new ArrayList<Double>();
 	}
 
 	public int getMinRange() {
@@ -495,6 +501,22 @@ public class Config {
 
 	public void setAccelerateProtectTime(int accelerateProtectTime) {
 		this.accelerateProtectTime = accelerateProtectTime;
+	}
+
+	public ArrayList<Double> getSpreadLocation() {
+		return spreadLocation;
+	}
+
+	public void setSpreadLocation(ArrayList<Double> spreadLocation) {
+		this.spreadLocation = spreadLocation;
+	}
+
+	public GameJoin getGameJoin() {
+		return gameJoin;
+	}
+
+	public void setGameJoin(GameJoin gameJoin) {
+		this.gameJoin = gameJoin;
 	}
 
 }

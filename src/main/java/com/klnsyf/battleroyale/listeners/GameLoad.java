@@ -2,8 +2,6 @@ package com.klnsyf.battleroyale.listeners;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Random;
-
 import org.bukkit.Difficulty;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
@@ -76,7 +74,7 @@ public class GameLoad implements Listener {
 
 	private void playersSpread(ArrayList<Player> players, int attempt, int minRange, int maxRange, int spreadDistance,
 			int spreadSpace) {
-		ArrayList<Double> locations = spreadAttempt(attempt, minRange, maxRange, spreadDistance, spreadSpace);
+		ArrayList<Double> locations = config.getSpreadLocation();
 		for (Player player : config.getAlivePlayers()) {
 			int index = (int) (Math.random() * locations.size());
 			double radian = locations.get(index);
@@ -137,43 +135,11 @@ public class GameLoad implements Listener {
 	private void locationBroadcast(ArrayList<Player> players, boolean isHideName) {
 		for (Player player : players) {
 			player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìaSurvivor Locator:");
-			new PlayerLocator(plugin).playerLocate(player, players, isHideName, false);
+			new PlayerLocator(plugin).playerLocate(player, players, isHideName, true);
 		}
 		plugin.getServer().getConsoleSender().sendMessage("[¡ì6Battle Royale¡ìr] ¡ìaSurvivor Locator:");
 		new PlayerLocator(plugin).playerLocate(plugin.getServer().getConsoleSender(), players);
 
-	}
-
-	private ArrayList<Double> spreadAttempt(int attempt, int minRange, int maxRange, int spreadDistance,
-			int spreadSpace) {
-		double[] randomRadian = new double[attempt];
-		for (int index = 0; index < attempt; index++) {
-			randomRadian[index] = (new Random()).nextDouble() * 2 * Math.PI;
-		}
-		ArrayList<Double> legalRadian = new ArrayList<Double>();
-		for (double radian : randomRadian) {
-			if (Math.abs(spreadDistance * Math.cos(radian)) < minRange
-					|| Math.abs(spreadDistance * Math.cos(radian)) > maxRange
-					|| Math.abs(spreadDistance * Math.sin(radian)) < minRange
-					|| Math.abs(spreadDistance * Math.sin(radian)) > maxRange
-					|| spreadSpaceTest(radian, legalRadian, spreadDistance, spreadSpace)) {
-			} else {
-				legalRadian.add(radian);
-			}
-		}
-		return legalRadian;
-	}
-
-	private boolean spreadSpaceTest(double testRadian, ArrayList<Double> radianArray, int spreadDistance,
-			int spreadSpace) {
-		double minRadianSpace = 2 * Math.asin(spreadSpace / 2 / spreadDistance);
-		boolean test = false;
-		for (double radian : radianArray) {
-			if (Math.abs(testRadian - radian) < minRadianSpace) {
-				test = true;
-			}
-		}
-		return test;
 	}
 
 	public BattleRoyale getBattleRoyale() {

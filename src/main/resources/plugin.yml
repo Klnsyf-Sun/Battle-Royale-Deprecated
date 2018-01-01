@@ -16,8 +16,10 @@ permissions:
     children:
       battleroyale.main: true
       battleroyale.join: true
+      battleroyale.test: true
   battleroyale.main:
     default: op
   battleroyale.join:
     default: true
-    
+  battleroyale.test:
+    default: false

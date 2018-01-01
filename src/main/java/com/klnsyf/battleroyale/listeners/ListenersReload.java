@@ -31,6 +31,7 @@ public class ListenersReload {
 		config.getOreAutoMelt().setBattleRoyale(battleRoyale);
 		config.getWorldBorderStopShrink().setBattleRoyale(battleRoyale);
 		config.getSummonBlaze().setBattleRoyale(battleRoyale);
+		config.getGameJoin().setBattleRoyale(battleRoyale);
 	}
 
 }

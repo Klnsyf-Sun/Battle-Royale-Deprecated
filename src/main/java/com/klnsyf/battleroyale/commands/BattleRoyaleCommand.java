@@ -5,15 +5,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import com.klnsyf.battleroyale.battleroyale.BattleRoyale;
 import com.klnsyf.battleroyale.events.GameEndEvent;
+import com.klnsyf.battleroyale.events.GameJoinEvent;
 import com.klnsyf.battleroyale.events.GameLoadEvent;
 import com.klnsyf.battleroyale.events.GamePresetEvent;
 
@@ -120,21 +118,8 @@ public class BattleRoyaleCommand implements CommandExecutor {
 				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcError: There is no battlefield preseted");
 			} else if (battleRoyale.getState() == 1) {
 				if (sender instanceof Player) {
-					ArrayList<Player> players = battleRoyale.getConfig().getPlayers();
-					if (players.contains(sender)) {
-						sender.sendMessage(
-								"[¡ì6Battle Royale¡ìr] ¡ìcError: You have already joined into this battlefield");
-					} else {
-						players.add((Player) sender);
-						battleRoyale.getConfig().setPlayers(players);
-						battleRoyale.getPlugin().getServer().getConsoleSender()
-								.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìd" + sender.getName()
-										+ " ¡ìajoin into battle field ¡ìb" + battleRoyale.getWorld().getName());
-						for (Player player : battleRoyale.getPlugin().getServer().getOnlinePlayers()) {
-							player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìd" + sender.getName()
-									+ " ¡ìajoin into battle field ¡ìb" + battleRoyale.getWorld().getName());
-						}
-					}
+					battleRoyale.getPlugin().getServer().getPluginManager()
+							.callEvent(new GameJoinEvent((Player) sender));
 				} else {
 					sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcError: Only players can use this command");
 				}
@@ -183,33 +168,20 @@ public class BattleRoyaleCommand implements CommandExecutor {
 		}
 	}
 
-	@SubCommand(command = "test", premission = "battleroyale.main")
+	@SuppressWarnings("unused")
+	@SubCommand(command = "test", premission = "battleroyale.test")
 	public void test(CommandSender sender, String[] args) {
-		battleRoyale.getPlugin().getServer().getPluginManager().callEvent(new GameEndEvent());
-		battleRoyale.getPlugin().getServer().getPluginManager()
-				.callEvent(new GamePresetEvent(((Player) sender).getWorld(), battleRoyale.getConfig(), battleRoyale));
-		ArrayList<Player> players = battleRoyale.getConfig().getPlayers();
-		for (Player player : battleRoyale.getPlugin().getServer().getOnlinePlayers()) {
-			players.add(player);
+		if (false && sender instanceof Player && sender.hasPermission("battleroyale.test")) {
+			battleRoyale.getPlugin().getServer().getPluginManager().callEvent(new GameEndEvent());
+			battleRoyale.getPlugin().getServer().getPluginManager().callEvent(
+					new GamePresetEvent(((Player) sender).getWorld(), battleRoyale.getConfig(), battleRoyale));
+			ArrayList<Player> players = battleRoyale.getConfig().getPlayers();
+			for (Player player : battleRoyale.getPlugin().getServer().getOnlinePlayers()) {
+				battleRoyale.getPlugin().getServer().getPluginManager().callEvent(new GameJoinEvent(player));
+			}
+			battleRoyale.getConfig().setPlayers(players);
+			battleRoyale.getPlugin().getServer().getPluginManager().callEvent(new GameLoadEvent());
 		}
-		battleRoyale.getConfig().setPlayers(players);
-		battleRoyale.getPlugin().getServer().getPluginManager().callEvent(new GameLoadEvent());
-	}
-
-	@SubCommand(command = "dropItem", premission = "battleroyale.main")
-	public void dropItem(CommandSender sender, String[] args) {
-		((Player) sender).getWorld().dropItemNaturally(((Player) sender).getLocation(),
-				new ItemStack(Material.getMaterial(args[1])));
-	}
-
-	@SubCommand(command = "addItem", premission = "battleroyale.main")
-	public void addItem(CommandSender sender, String[] args) {
-		((Player) sender).getInventory().addItem(new ItemStack(Material.getMaterial(args[1])));
-	}
-
-	@SubCommand(command = "getItem", premission = "battleroyale.main")
-	public void getItem(CommandSender sender, String[] args) {
-		sender.sendMessage("" + ((Player) sender).getInventory().getItem(Integer.valueOf(args[1])));
 	}
 
 	public BattleRoyale getBattleRoyale() {

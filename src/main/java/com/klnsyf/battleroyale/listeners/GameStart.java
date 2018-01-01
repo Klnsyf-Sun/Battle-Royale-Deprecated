@@ -2,7 +2,9 @@ package com.klnsyf.battleroyale.listeners;
 
 import java.util.ArrayList;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -58,6 +60,8 @@ public class GameStart implements Listener {
 		for (Player player : players) {
 			new ActionbarMessage(plugin).sendActionbarMessage(player, "-= Game Start =-");
 			player.sendTitle("[¡ì6Battle Royale¡ìr]", "-= Game Start =-", 0, 40, 40);
+			player.playEffect(player.getLocation(), Effect.CLICK1, null);
+			player.spawnParticle(Particle.SPELL_WITCH, player.getEyeLocation(), config.getPraticleAmount(), null);
 		}
 	}
 
