@@ -23,7 +23,7 @@ public class UpdateChecker {
 	public String getLatestVersion() throws IOException {
 		String version = null;
 		try {
-			URL url = new URL("https://klnsyf.github.io/version.txt");
+			URL url = new URL("https://raw.githubusercontent.com/Klnsyf-Sun/Battle-Royale/master/version.txt");
 			URLConnection urlc = url.openConnection();
 			urlc.setConnectTimeout(5000);
 			urlc.setDoOutput(true);
@@ -46,7 +46,7 @@ public class UpdateChecker {
 			e.printStackTrace();
 		}
 		if (!currentVersion.equalsIgnoreCase(latestVersion)) {
-			sender.sendMessage("[§6Battle Royale§r] §a发现新版本: " + latestVersion);
+			sender.sendMessage("[§6Battle Royale§r] §aA new version available: " + latestVersion);
 		}
 	}
 
