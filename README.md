@@ -6,8 +6,8 @@ Latest Version: *1.0.3*  [**Download (Ver 1.0.3 for CraftBukkit)**](https://raw
 **v1.1.0 Update Preview:**  
 - Dream  
   - I18n  
-    - Muti-Battlefield  
-      - Map<World,BattlefieldConfiguration>  
+  - Muti-Battlefield  
+    - Map<World,BattlefieldConfiguration>  
   - Configuration  
     - Reconstruction  
       - config.yml → Settings  
