@@ -3,8 +3,28 @@
 A `Minecraft` server plugin based on `Craftbukkit`.  
 Latest Version: *1.0.3*  [**Download (Ver 1.0.3 for CraftBukkit)**](https://raw.githubusercontent.com/Klnsyf-Sun/Battle-Royale/master/target/Battle%20Royale%201.0.3.jar)
 
-**v1.1.0 Update Preview:**
-- Battle Royale Kit
-- Localization
-- Available on `Spigot`
-- Optimization for multiplayer(>16)
+**v1.1.0 Update Preview:**  
+- Dream  
+  - I18n  
+    - Muti-Battlefield  
+      - Map<World,BattlefieldConfiguration>  
+  - Configuration  
+    - Reconstruction  
+      - config.yml → Settings  
+      - @DataFolder/language/*.yml → BattlefieldConfiguration  
+    - BattlefieldConfiguration  
+      - Add: target-players  
+        - Battle will automically start when players.size reaches this value  
+      - Add: max-players  
+        - Limit the max players as min(max-players, spreadLoctions.size)  
+  - Permissions for All Commands  
+  - Throw New Exceptions!  
+  - Available on Java 1.8+ & Minecraft Server 1.9+  
+	
+- Daydream  
+  - Kit  
+  - Console Logger  
+  - API  
+  - Optimization for Multiplayer  
+  
+> Release in 14 days...
