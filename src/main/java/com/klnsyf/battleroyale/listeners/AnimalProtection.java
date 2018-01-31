@@ -1,43 +1,35 @@
 package com.klnsyf.battleroyale.listeners;
 
+import org.bukkit.Server;
 import org.bukkit.entity.Animals;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
-import com.klnsyf.battleroyale.battleroyale.BattleRoyale;
-import com.klnsyf.battleroyale.configuration.Config;
+import com.klnsyf.battleroyale.BattleRoyale;
+import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
+import com.klnsyf.battleroyale.configuration.Configuration;
+import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 
 public class AnimalProtection implements Listener {
-	private BattleRoyale battleRoyale;
-	private BattleRoyaleSetup plugin;
-	private Config config;
+	private final BattleRoyale plugin = BattleRoyale.plugin;
+	private final Server server = BattleRoyale.server;
+	private final Configuration configuation = new Configuration();
 
-	public AnimalProtection(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-		this.plugin = battleRoyale.getPlugin();
-		this.config = battleRoyale.getConfig();
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	public AnimalProtection() {
+		server.getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
 	public void onAnimalDamage(EntityDamageEvent event) {
-		if (battleRoyale.getState() == 3) {
-			if (config.isProtectAnimal()) {
-				if (event.getEntity() instanceof Animals) {
+		if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).getStatue() == 2) {
+				if (event.getEntity() instanceof Animals && (boolean) configuation.getValue(event.getEntity().getWorld(),
+						ConfigurationKey.BATTLE_MISC_PROTECT_ANIMAL)) {
 					event.setCancelled(true);
 				}
 			}
 		}
 	}
-
-	public BattleRoyale getBattleRoyale() {
-		return battleRoyale;
-	}
-
-	public void setBattleRoyale(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-	}
-
 }

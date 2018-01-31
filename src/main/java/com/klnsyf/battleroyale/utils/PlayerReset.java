@@ -5,13 +5,9 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
-
 public class PlayerReset {
-	private BattleRoyaleSetup plugin;
 
-	public PlayerReset(BattleRoyaleSetup plugin) {
-		this.plugin = plugin;
+	public PlayerReset() {
 	}
 
 	public void effectClear(Player player) {
@@ -58,11 +54,4 @@ public class PlayerReset {
 		player.setLevel(0);
 	}
 
-	public BattleRoyaleSetup getPlugin() {
-		return plugin;
-	}
-
-	public void setPlugin(BattleRoyaleSetup plugin) {
-		this.plugin = plugin;
-	}
 }

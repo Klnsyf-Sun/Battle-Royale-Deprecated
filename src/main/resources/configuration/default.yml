@@ -1,0 +1,49 @@
+# WARN: Please check the Type, MUST be EXACT as the Type given
+# Example: For an entry needs Type Double, you MUST use 40.0 not 40
+player-generic-option:
+  max-health: 40.0    # Double
+player-spread-option:
+  range:
+    min: 500    # Integer
+    max: 1750    # Integer
+  radius: 1500    # Integer
+  min-relative-space: 500    # Integer
+  attempt-times: 1024    # Integer
+world-border-option:
+  damage:
+    amount: 1.0    # Double
+    buffer-distance: 0    # Integer
+  warning-distance: 8    # Integer
+  radius:
+    min: 64    # Integer
+    max: 2048    # Integer
+  shrink-speed: 1.0    # Double
+battle-misc-option:
+  protect-animal: True    # Boolean("true" OR "false", IgnoreCase)
+  ore-auto-melt: False    # Boolean("true" OR "false", IgnoreCase)
+  hide-player-name: True    # Boolean("true" OR "false", IgnoreCase)
+  init-supply:    
+  # - Material: Integer
+  # - Must be exact Material ID, see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+    - REDSTONE: 1
+    - BREAD: 4
+    - BOAT: 1
+  loading-time: 5    # Integer
+  compass-option:
+    enabled: True    # Boolean("true" OR "false", IgnoreCase)
+    mode: True    # Boolean("true" OR "false", IgnoreCase)
+    cooldown: 100    # Integer
+  shrink-accelerating-option:
+    enabled: True    # Boolean("true" OR "false", IgnoreCase)
+    activate-item: IRON_BLOCK    # Material
+    accelerate-speed: 1.0    # Double
+    duration: 1200    # Integer
+    cooldown: 300    # Integer
+    protect-time: 6000    # Integer
+  summon-blaze:
+    enabled: True    # Boolean("true" OR "false", IgnoreCase)
+  deathmatch:
+    enabled: True    # Boolean("true" OR "false", IgnoreCase
+  killer-bonus:
+    health: 5    # Integer
+    saturation: 5    # Integer

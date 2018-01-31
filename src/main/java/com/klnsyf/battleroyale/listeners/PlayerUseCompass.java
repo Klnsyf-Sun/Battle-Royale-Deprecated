@@ -1,9 +1,11 @@
 package com.klnsyf.battleroyale.listeners;
 
 import java.text.DecimalFormat;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Server;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,53 +13,52 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
-import com.klnsyf.battleroyale.battleroyale.BattleRoyale;
-import com.klnsyf.battleroyale.configuration.Config;
+
+import com.klnsyf.battleroyale.BattleRoyale;
+import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
+import com.klnsyf.battleroyale.configuration.Configuration;
+import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.PlayerUseCompassEvent;
-import com.klnsyf.battleroyale.events.WorldBorderStopShrinkEvent;
-import com.klnsyf.battleroyale.utils.PlayerLocator;
+import com.klnsyf.battleroyale.utils.WorldBorderHandler;
 
 public class PlayerUseCompass implements Listener {
-	private BattleRoyale battleRoyale;
-	private BattleRoyaleSetup plugin;
-	private Config config;
+	private final BattleRoyale plugin = BattleRoyale.plugin;
+	private final Server server = BattleRoyale.server;
+	private final String prefix = BattleRoyale.prefix;
+	private final Configuration configuation = new Configuration();
 
-	public PlayerUseCompass(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-		this.plugin = battleRoyale.getPlugin();
-		this.config = battleRoyale.getConfig();
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	public PlayerUseCompass() {
+		server.getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	public void onPlayerUseCompass(PlayerDropItemEvent event) {
-		if (battleRoyale.getState() == 3) {
-			if (!config.getCompassMode()) {
-				if (event.getItemDrop().getItemStack().getType() == Material.COMPASS) {
-					plugin.getServer().getPluginManager().callEvent(new PlayerUseCompassEvent());
-					Item i = event.getItemDrop();
-					i.setGlowing(true);
-					i.setInvulnerable(true);
-					i.setPickupDelay(config.getCompassColdDown());
-					sendPlayerLocation(event.getPlayer());
+	public void onPlayerInteractCompass(PlayerDropItemEvent event) {
+		if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).getStatue() == 2) {
+				if (!(boolean) configuation.getValue(event.getPlayer().getWorld(), ConfigurationKey.BATTLE_MISC_COMPASS_MODE)) {
+					if (event.getItemDrop().getItemStack().getType() == Material.COMPASS) {
+						server.getPluginManager().callEvent(new PlayerUseCompassEvent(event.getPlayer()));
+						Item item = event.getItemDrop();
+						item.setGlowing(true);
+						item.setInvulnerable(true);
+						item.setPickupDelay(configuation.getValue(event.getPlayer().getWorld(),
+								ConfigurationKey.BATTLE_MISC_COMPASS_COOLDOWN));
+					}
 				}
 			}
 		}
 	}
 
 	@EventHandler
-	public void onPlayerUseCompass(PlayerInteractEvent event) {
-		if (battleRoyale.getState() == 3) {
-			if (config.getCompassMode()) {
-				if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+	public void onPlayerInteractCompass(PlayerInteractEvent event) {
+		if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).getStatue() == 2) {
+				if ((boolean) configuation.getValue(event.getPlayer().getWorld(), ConfigurationKey.BATTLE_MISC_COMPASS_MODE)) {
 					if (event.getMaterial() == Material.COMPASS) {
-						if (event.getPlayer().hasCooldown((Material.COMPASS))) {
-							event.setCancelled(true);
-						} else {
-							plugin.getServer().getPluginManager().callEvent(new PlayerUseCompassEvent());
-							event.getPlayer().setCooldown(Material.COMPASS, config.getCompassColdDown());
-							sendPlayerLocation(event.getPlayer());
+						if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+							server.getPluginManager().callEvent(new PlayerUseCompassEvent(event.getPlayer()));
+							event.getPlayer().setCooldown(Material.COMPASS, configuation.getValue(event.getPlayer().getWorld(),
+									ConfigurationKey.BATTLE_MISC_COMPASS_COOLDOWN));
 						}
 					}
 				}
@@ -65,71 +66,72 @@ public class PlayerUseCompass implements Listener {
 		}
 	}
 
-	private boolean isWorldBorderShrinking(double minRadius, double currentRadius) {
-		if (minRadius == currentRadius) {
-			if (config.isWorldBorderShrinking()) {
-				battleRoyale.getPlugin().getServer().getPluginManager().callEvent(new WorldBorderStopShrinkEvent());
-				config.setWorldBorderShrinking(false);
+	@EventHandler
+	public void onPlayerUseCompass(PlayerUseCompassEvent event) {
+		if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).getStatue() == 2) {
+				sendPlayerLocation(event.getPlayer());
 			}
-			return false;
-		} else {
-			config.setWorldBorderShrinking(true);
-			return true;
 		}
 	}
 
 	private void sendPlayerLocation(Player player) {
-		isWorldBorderShrinking(config.getMinRadius(), config.getWorldBorderHandler().getWorldBorderRadius());
-		Location l = player.getLocation();
-		l.setY(l.getY() + 1);
-		player.spawnParticle(Particle.SPELL_WITCH, l, 256);
+		new WorldBorderHandler(player.getWorld()).controlWorldBorder(
+				configuation.getValue(player.getWorld(), ConfigurationKey.WORLD_BORDER_MIN_RADIUS),
+				BattlefieldHandler.battlefields.get(player.getWorld()).getShrinkSpeed());
+		Location loc = player.getEyeLocation();
+		player.spawnParticle(Particle.SPELL_WITCH, loc, 256);
 		player.getWorld().strikeLightningEffect(player.getLocation());
-		player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìaWorldBorder Information:");
-		int buffer = ((int) config.getWorldBorderHandler().getWorldBorderRadius())
-				- ((int) Math.max(Math.abs(l.getX()), Math.abs(l.getZ())));
+		player.sendMessage("[Â§6Battle RoyaleÂ§r] Â§aWorldBorder Information:");
+		int buffer = ((int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius())
+				- ((int) Math.max(Math.abs(loc.getX()), Math.abs(loc.getZ())));
 		String s;
 		if (buffer >= 800) {
-			s = "¡ìa";
+			s = "Â§a";
 		} else if (buffer >= 500) {
-			s = "¡ìe";
+			s = "Â§e";
 		} else if (buffer >= 200) {
-			s = "¡ì6";
+			s = "Â§6";
 		} else {
-			s = "¡ì4";
+			s = "Â§4";
 		}
-		if (config.isWorldBorderShrinking()) {
-			player.sendMessage("¡ì7>> ¡ìaRadius: " + (int) config.getWorldBorderHandler().getWorldBorderRadius() + "m ("
-					+ s + buffer + "¡ìam)" + "    Speed: "
-					+ new DecimalFormat("0.00").format(config.getWorldBorderHandler().getShrinkSpeed()) + " ¡ìam/s");
+		if (BattlefieldHandler.battlefields.get(player.getWorld()).isWorldBorderShrinking()) {
+			player.sendMessage("Â§7>> Â§aRadius: " + (int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius()
+					+ "m ("
+					+ s + buffer + "Â§am)" + "    Speed: "
+					+ new DecimalFormat("0.00").format(BattlefieldHandler.battlefields.get(player.getWorld()).getShrinkSpeed())
+					+ " Â§am/s");
 		} else {
-			player.sendMessage("¡ì7>> ¡ìaRadius: " + (int) config.getWorldBorderHandler().getWorldBorderRadius() + "m");
+			player.sendMessage(
+					"Â§7>> Â§aRadius: " + (int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius() + "m");
 		}
-		player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìaSurvivor Locator:");
-		new PlayerLocator(plugin).playerLocate(player, config.getAlivePlayers(), config.getIsHideName(), true);
+		player.sendMessage(prefix + "Â§aSurvivor Locator:");
+		playerLocate(player);
+
 	}
 
-	public BattleRoyaleSetup getPlugin() {
-		return plugin;
+	public void playerLocate(Player sender) {
+		for (Player player : BattlefieldHandler.battlefields.get(sender.getWorld()).players) {
+			if (sender == player) {
+				continue;
+			}
+			String s = "???";
+			if (!(boolean) configuation.getValue(sender.getWorld(), ConfigurationKey.BATTLE_MISC_HIDE_NAME)) {
+				s = player.getName();
+			}
+			int dis = (int) sender.getLocation().distance(player.getLocation());
+			String c;
+			if (dis >= 800) {
+				c = "Â§a";
+			} else if (dis >= 500) {
+				c = "Â§e";
+			} else if (dis >= 200) {
+				c = "Â§6";
+			} else {
+				c = "Â§4";
+			}
+			sender.sendMessage("Â§7>> Â§d " + s + " Â§b>Â§f " + (int) player.getLocation().getX() + ", "
+					+ (int) player.getLocation().getZ() + " (" + c + dis + "Â§am)");
+		}
 	}
-
-	public void setPlugin(BattleRoyaleSetup plugin) {
-		this.plugin = plugin;
-	}
-
-	public Config getConfig() {
-		return config;
-	}
-
-	public void setConfig(Config config) {
-		this.config = config;
-	}
-
-	public BattleRoyale getBattleRoyale() {
-		return battleRoyale;
-	}
-
-	public void setBattleRoyale(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-	}
-
 }

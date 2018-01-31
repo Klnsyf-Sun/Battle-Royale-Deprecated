@@ -11,57 +11,59 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.material.Dye;
 
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
-import com.klnsyf.battleroyale.battleroyale.BattleRoyale;
+import com.klnsyf.battleroyale.BattleRoyale;
+import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 
 public class AutoLapis implements Listener {
-	private BattleRoyale battleRoyale;
-	private BattleRoyaleSetup plugin;
+	private final BattleRoyale plugin = BattleRoyale.plugin;
 
-	public AutoLapis(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-		this.plugin = battleRoyale.getPlugin();
+	public AutoLapis() {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	public void onInventoryOpen(InventoryOpenEvent evt) {
-		if (evt.getInventory().getType() == InventoryType.ENCHANTING) {
-			fillLapis(evt.getInventory());
-		}
-	}
-
-	@EventHandler
-	public void onInventoryClose(InventoryCloseEvent evt) {
-		if (evt.getInventory().getType() == InventoryType.ENCHANTING) {
-			evt.getInventory().clear(1);
-		}
-	}
-
-	@EventHandler
-	public void onInventoryClick(InventoryClickEvent evt) {
-		if (evt.getInventory().getType() == InventoryType.ENCHANTING) {
-			if (evt.getSlotType() == SlotType.CRAFTING) {
-				if (evt.getSlot() == 1) {
-					evt.setCancelled(true);
-				} else if (evt.getSlotType() == SlotType.CRAFTING) {
-					fillLapis(evt.getInventory());
+	public void onInventoryOpen(InventoryOpenEvent event) {
+		if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).getStatue() == 2) {
+				if (event.getInventory().getType() == InventoryType.ENCHANTING) {
+					fillLapis(event.getInventory());
 				}
 			}
 		}
 	}
 
-	private void fillLapis(Inventory inv) {
+	@EventHandler
+	public void onInventoryClose(InventoryCloseEvent event) {
+		if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).getStatue() == 2) {
+				if (event.getInventory().getType() == InventoryType.ENCHANTING) {
+					event.getInventory().clear(1);
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent event) {
+		if (BattlefieldHandler.battlefields.get(event.getWhoClicked().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getWhoClicked().getWorld()).getStatue() == 2) {
+				if (event.getInventory().getType() == InventoryType.ENCHANTING) {
+					if (event.getSlotType() == SlotType.CRAFTING) {
+						if (event.getSlot() == 1) {
+							event.setCancelled(true);
+						} else if (event.getSlotType() == SlotType.CRAFTING) {
+							fillLapis(event.getInventory());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void fillLapis(Inventory inventory) {
 		Dye dye = new Dye();
 		dye.setColor(DyeColor.BLUE);
-		inv.setItem(1, dye.toItemStack(3));
+		inventory.setItem(1, dye.toItemStack(3));
 	}
 
-	public BattleRoyale getBattleRoyale() {
-		return battleRoyale;
-	}
-
-	public void setBattleRoyale(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-	}
 }

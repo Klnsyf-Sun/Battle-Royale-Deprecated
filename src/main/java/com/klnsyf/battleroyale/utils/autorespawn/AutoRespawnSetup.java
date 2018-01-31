@@ -1,24 +1,19 @@
 package com.klnsyf.battleroyale.utils.autorespawn;
 
-import org.bukkit.Bukkit;
-
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
+import com.klnsyf.battleroyale.BattleRoyale;
 
 public class AutoRespawnSetup {
-	private BattleRoyaleSetup plugin = null;
+	private BattleRoyale plugin = BattleRoyale.plugin;
 	AutoRespawn autoRespawn = null;
 
-	public AutoRespawnSetup(BattleRoyaleSetup plugin) {
-		if (this.plugin == null) {
-			this.plugin = plugin;
-			setupAutoRespawn();
-		}
+	public AutoRespawnSetup() {
+		setupAutoRespawn();
 	}
 
 	private boolean setupAutoRespawn() {
 		String version;
 		try {
-			version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+			version = plugin.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		} catch (ArrayIndexOutOfBoundsException whatVersionAreYouUsingException) {
 			return false;
 		}

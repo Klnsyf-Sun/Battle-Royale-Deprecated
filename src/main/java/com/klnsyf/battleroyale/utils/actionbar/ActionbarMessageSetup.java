@@ -1,24 +1,19 @@
 package com.klnsyf.battleroyale.utils.actionbar;
 
-import org.bukkit.Bukkit;
-
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
+import com.klnsyf.battleroyale.BattleRoyale;
 
 public class ActionbarMessageSetup {
-	private BattleRoyaleSetup plugin = null;
+	private BattleRoyale plugin = BattleRoyale.plugin;
 	ActionbarMessage actionbarMessage = null;
 
-	public ActionbarMessageSetup(BattleRoyaleSetup plugin) {
-		if (this.plugin == null) {
-			this.plugin = plugin;
-			setupActionbar();
-		}
+	public ActionbarMessageSetup() {
+		setupActionbar();
 	}
 
 	private boolean setupActionbar() {
 		String version;
 		try {
-			version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+			version = plugin.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		} catch (ArrayIndexOutOfBoundsException whatVersionAreYouUsingException) {
 			return false;
 		}

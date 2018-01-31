@@ -8,16 +8,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.bukkit.command.CommandSender;
-
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
+import com.klnsyf.battleroyale.BattleRoyale;
 
 public class UpdateChecker {
-	private String latestVer;
-	private BattleRoyaleSetup plugin;
+	private final String prefix = BattleRoyale.prefix;
 
-	public UpdateChecker(BattleRoyaleSetup plugin) {
-		this.plugin = plugin;
+	public UpdateChecker() {
 	}
 
 	public String getLatestVersion() throws IOException {
@@ -33,12 +29,11 @@ public class UpdateChecker {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		setLatestVer(version);
 		return version;
 	}
 
-	public void updateCheck(CommandSender sender) {
-		String currentVersion = plugin.getDescription().getVersion();
+	public void checkUpdate() {
+		String currentVersion = BattleRoyale.plugin.getDescription().getVersion();
 		String latestVersion = null;
 		try {
 			latestVersion = getLatestVersion();
@@ -46,16 +41,8 @@ public class UpdateChecker {
 			e.printStackTrace();
 		}
 		if (!currentVersion.equalsIgnoreCase(latestVersion)) {
-			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìaA new version available: " + latestVersion);
+			BattleRoyale.plugin.getServer().getConsoleSender()
+					.sendMessage(prefix + "¡ìaNew Version Available: ¡ìb" + latestVersion);
 		}
 	}
-
-	public String getLatestVer() {
-		return latestVer;
-	}
-
-	public void setLatestVer(String latestVer) {
-		this.latestVer = latestVer;
-	}
-
 }

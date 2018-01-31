@@ -1,20 +1,23 @@
 package com.klnsyf.battleroyale.events;
 
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerUseCompassEvent extends Event implements Cancellable {
+public class PlayerSummonBlazeEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
 	private final Player player;
+	private final Block block;
 	private final World world;
 
-	public PlayerUseCompassEvent(Player player) {
+	public PlayerSummonBlazeEvent(Player player, Block block) {
 		super(false);
 		this.player = player;
+		this.block = block;
 		this.world = player.getWorld();
 	}
 
@@ -45,4 +48,7 @@ public class PlayerUseCompassEvent extends Event implements Cancellable {
 		return player;
 	}
 
+	public Block getBlock() {
+		return block;
+	}
 }

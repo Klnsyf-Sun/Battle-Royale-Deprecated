@@ -6,13 +6,13 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerUseCompassEvent extends Event implements Cancellable {
+public class PlayerThrowPrimedTntEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
 	private final Player player;
 	private final World world;
 
-	public PlayerUseCompassEvent(Player player) {
+	public PlayerThrowPrimedTntEvent(Player player) {
 		super(false);
 		this.player = player;
 		this.world = player.getWorld();
@@ -44,5 +44,4 @@ public class PlayerUseCompassEvent extends Event implements Cancellable {
 	public Player getPlayer() {
 		return player;
 	}
-
 }

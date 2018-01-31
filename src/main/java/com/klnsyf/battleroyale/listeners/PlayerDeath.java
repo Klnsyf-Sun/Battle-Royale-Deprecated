@@ -1,86 +1,73 @@
 package com.klnsyf.battleroyale.listeners;
 
-import java.util.ArrayList;
-
 import org.bukkit.GameMode;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import com.klnsyf.battleroyale.BattleRoyaleSetup;
-import com.klnsyf.battleroyale.battleroyale.BattleRoyale;
-import com.klnsyf.battleroyale.configuration.Config;
-import com.klnsyf.battleroyale.events.GameEndEvent;
+
+import com.klnsyf.battleroyale.BattleRoyale;
+import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
+import com.klnsyf.battleroyale.configuration.Configuration;
+import com.klnsyf.battleroyale.configuration.ConfigurationKey;
+import com.klnsyf.battleroyale.events.BattleEndEvent;
+import com.klnsyf.battleroyale.utils.autorespawn.AutoRespawnSetup;
 
 public class PlayerDeath implements Listener {
-	private BattleRoyale battleRoyale;
-	private BattleRoyaleSetup plugin;
-	private Config config;
+	private final BattleRoyale plugin = BattleRoyale.plugin;
+	private final Server server = BattleRoyale.server;
+	private final String prefix = BattleRoyale.prefix;
+	private final Configuration configuation = new Configuration();
 
-	public PlayerDeath(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-		this.plugin = battleRoyale.getPlugin();
-		this.config = battleRoyale.getConfig();
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	public PlayerDeath() {
+		server.getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		if (battleRoyale.getState() == 3) {
-			plugin.getServer().getConsoleSender().sendMessage("[¡ì6Battle Royale¡ìr] ¡ìc" + event.getDeathMessage());
-			event.getEntity().getWorld().strikeLightningEffect(event.getEntity().getLocation());
-			event.getEntity().setGameMode(GameMode.SPECTATOR);
-			ArrayList<Player> alivePlayers = config.getAlivePlayers();
-			alivePlayers.remove(event.getEntity());
-			config.setAlivePlayers(alivePlayers);
-			if (event.getEntity().getKiller() != null) {
-				for (Player player : plugin.getServer().getOnlinePlayers()) {
-					player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìd" + event.getEntity().getName() + " ¡ìcwas killed by ¡ìd"
-							+ event.getEntity().getKiller().getName());
+		if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()) != null) {
+			if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).getStatue() == 2) {
+				server.getConsoleSender().sendMessage(prefix + "¡ìc" + event.getDeathMessage());
+				event.getEntity().getWorld().strikeLightningEffect(event.getEntity().getLocation());
+				event.getEntity().setGameMode(GameMode.SPECTATOR);
+				if (event.getEntity().getKiller() != null) {
+					for (Player player : BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players) {
+						player.sendMessage(prefix + "¡ìd" + event.getEntity().getName() + " ¡ìckilled by ¡ìd"
+								+ event.getEntity().getKiller().getName());
+					}
+					event.getEntity().getKiller()
+							.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,
+									configuation.getValue(event.getEntity().getWorld(),
+											ConfigurationKey.BATTLE_MISC_KILLER_BONUS_HEALTH),
+									7, false, false));
+					event.getEntity().getKiller()
+							.addPotionEffect(
+									new PotionEffect(PotionEffectType.SATURATION,
+											configuation.getValue(event.getEntity().getWorld(),
+													ConfigurationKey.BATTLE_MISC_KILLER_BONUS_SATURATION),
+											0, false, false));
+				} else {
+					for (Player player : BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players) {
+						player.sendMessage(prefix + "¡ìd" + event.getEntity().getName() + " ¡ìcdied");
+					}
 				}
-				event.getEntity().getKiller()
-						.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 5, 7, false, false));
-				event.getEntity().getKiller()
-						.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 5, 0, false, false));
-			} else {
-				for (Player player : plugin.getServer().getOnlinePlayers()) {
-					player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìd" + event.getEntity().getName() + " ¡ìcdied");
+				new AutoRespawnSetup().getAutoRespawn().autoRespawn(event.getEntity(), event.getEntity().getLocation());
+				BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.remove(event.getEntity());
+				if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players.size() == 1) {
+					server.getPluginManager()
+							.callEvent(new BattleEndEvent(server.getConsoleSender(), event.getEntity().getWorld(),
+									BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players.get(0)));
+				}
+				if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players.size() < 1) {
+					server.getPluginManager()
+							.callEvent(new BattleEndEvent(server.getConsoleSender(), event.getEntity().getWorld(),
+									null));
 				}
 			}
 		}
-		if (config.getAlivePlayers().size() == 1) {
-			plugin.getServer().getPluginManager().callEvent(new GameEndEvent(config.getAlivePlayers().get(0)));
-		} else {
-			for (Player player : plugin.getServer().getOnlinePlayers()) {
-				player.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìc" + config.getAlivePlayers().size() + " survivors left");
-			}
-		}
-	}
-
-	public BattleRoyale getBattleRoyale() {
-		return battleRoyale;
-	}
-
-	public void setBattleRoyale(BattleRoyale battleRoyale) {
-		this.battleRoyale = battleRoyale;
-	}
-
-	public BattleRoyaleSetup getPlugin() {
-		return plugin;
-	}
-
-	public void setPlugin(BattleRoyaleSetup plugin) {
-		this.plugin = plugin;
-	}
-
-	public Config getConfig() {
-		return config;
-	}
-
-	public void setConfig(Config config) {
-		this.config = config;
 	}
 
 }
