@@ -25,11 +25,13 @@ public class BattleRoyale extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 
-		saveDefaultConfig();
-
 		BattleRoyale.server = getServer();
 		BattleRoyale.dataFolder = getDataFolder();
 		BattleRoyale.settings = new Settings();
+
+		saveDefaultConfig();
+		saveResource("language\\en_US.yml", false);
+		saveResource("configuration\\default.yml", false);
 
 		if (!SystemUtils.isJavaVersionAtLeast(1.8f)) {
 			throw new IllegalStateException("[Battle Royale] Required Java Version is at least 1.8!");

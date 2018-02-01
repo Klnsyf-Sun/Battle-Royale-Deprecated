@@ -1,0 +1,48 @@
+COMMANDS:
+  HELP: "§6=================[§b HELP§6 ]================="
+  TIP: "§aTips: You can use §6/br §aas aliases of §6/battleroyale"
+  UNDEFINDED: "§cUndefinded SubCommand: §b%COMMAND"
+  UNDEFINDED_WORLD: "§cCan't find world with name: §b%WORLDNAME"
+  WORLD_PRESETTED: "§cWorld §b%WORLDNAME §chas already been preseted"
+  WORLD_UNPRESETTED: "§cWorld §b%WORLDNAME §chasn't been preseted yet"
+
+EVENTS:
+  SHRINK_STOPPED: "§cWorld border has stopped shrinking"
+  SECOND: "second(s)"
+  BATTLE_START: "Battle Start"
+
+BATTLEFIELD_PRESET:
+  UNDEFINDED_CONFIGURATIONFILE: "§cCan't find configuration file with name: §b%CONFIGNAME"
+  SUCCESS_CONSOLE: "§aBattlefield §b%WORLDNAME §ahas successfully presetted with configuration §b%CONFIGNAME\n§7>> §aMax Player: §b%MAXPLAYER"
+  SUCCESS_PLAYER: "§aBattlefield §b%WORLDNAME §ahas been presetted\n§7>> §aMax Player: §b%MAXPLAYER\n§7>> §aYou can join this battlefield by command: §6/battleroyale join §b%WORLDNAME"
+  
+PLAYER_JOIN_BATTLEFIELD:
+  JOINED: "§cYou have already join battlefield §b%WORLDNAME"
+  FULL: "§cBattlefield §b%WORLDNAME §cis full"
+  SUCCESS: "§d%PLAYERNAME §ahas joined battlefield §b%WORLDNAME §a(§b%CURRENTPLAYER§a/%MAXPLAYER)"
+
+PLAYER_ACCELERATE_WORLD_BORDER_SHRINKING:
+  SUCCESS_ANONYMOUS: "§dSomeone §caccelerated the world border's shrinking"
+  SUCCESS: "§d%PLAYERNAME §caccelerated the world border's shrinking"
+
+BATTLE_END:
+  WINNER: "-= Winner: §d%PLAYERNAME §r=-"
+  FORCED_END: "§cGame has been forced to terminate"
+
+PLAYER_USE_COMPASS:
+  WORLD_BORDER: "World Border Infomation"
+  RADIUS: "Radius"
+  SPEED: "Speed"
+  SURVIVOR: "Survivor Locator"
+  ANONYMOUS: "Player"
+
+PLAYER_SUMMON_BLAZE:
+  SUCCESS: "You have successfully summon a blaze"
+
+PLAYER_DEATH:
+  PLAYER_KILLED: "§d%PLAYERNAME §ckilled by §d%KILLERNAME"
+  NATURE_DEATH: "§d%PLAYERNAME §cdied"
+
+DEATH_MATCH:
+  DEATH_MATCH: "Death Match"
+  ACTION_BAR_INFO: "World Border Has Stopped Shrinking"
