@@ -14,6 +14,8 @@ import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.configuration.Configuration;
 import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.BattleEndEvent;
+import com.klnsyf.battleroyale.messages.MessageKey;
+import com.klnsyf.battleroyale.messages.Messages;
 import com.klnsyf.battleroyale.utils.autorespawn.AutoRespawnSetup;
 
 public class PlayerDeath implements Listener {
@@ -35,8 +37,8 @@ public class PlayerDeath implements Listener {
 				event.getEntity().setGameMode(GameMode.SPECTATOR);
 				if (event.getEntity().getKiller() != null) {
 					for (Player player : BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players) {
-						player.sendMessage(prefix + "¡ìd" + event.getEntity().getName() + " ¡ìckilled by ¡ìd"
-								+ event.getEntity().getKiller().getName());
+						player.sendMessage(prefix + Messages.getMessage(MessageKey.PLAYER_DEATH_PLAYER_KILLED,
+								event.getEntity().getName(), event.getEntity().getKiller().getName()));
 					}
 					event.getEntity().getKiller()
 							.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,
@@ -51,7 +53,8 @@ public class PlayerDeath implements Listener {
 											0, false, false));
 				} else {
 					for (Player player : BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players) {
-						player.sendMessage(prefix + "¡ìd" + event.getEntity().getName() + " ¡ìcdied");
+						player.sendMessage(prefix
+								+ Messages.getMessage(MessageKey.PLAYER_DEATH_NATURE_DEATH, event.getEntity().getName()));
 					}
 				}
 				new AutoRespawnSetup().getAutoRespawn().autoRespawn(event.getEntity(), event.getEntity().getLocation());

@@ -120,7 +120,7 @@ public class BattleLoad implements Listener {
 					if (BattlefieldHandler.battlefields.get(world) == null) {
 						this.cancel();
 					}
-					String s = "Battle Start ";
+					String s = Messages.getMessage(MessageKey.EVENTS_BATTLE_START);
 
 					double i = block;
 					for (; i > Math.round(block * tick / totalTick); i--) {
@@ -129,11 +129,12 @@ public class BattleLoad implements Listener {
 					for (i = Math.round(block * tick / totalTick); i > 0; i--) {
 						s = s + "¡ìa¨€";
 					}
-					s = s + " ¡ìr" + new DecimalFormat("0.0").format(tick * totalTime / totalTick) + " seconds";
+					s = s + " ¡ìr" + new DecimalFormat("0.0").format(tick * totalTime / totalTick) + " "
+							+ Messages.getMessage(MessageKey.EVENTS_SECOND);
 					new ActionbarMessage().sendActionbarMessage(player, s);
 					if (tick <= 10 * 20 && tick % 20 == 0) {
 						player.playEffect(player.getLocation(), Effect.CLICK1, null);
-						player.sendTitle("[¡ì6Battle Royale¡ìr]", "-= " + (int) (tick / 20) + " seconds left =-", 0, 200,
+						player.sendTitle("[¡ì6Battle Royale¡ìr]", "-= " + (int) (tick / 20) + " =-", 0, 200,
 								0);
 					}
 					player.spawnParticle(Particle.SPELL_WITCH, player.getLocation(), 255, 0,

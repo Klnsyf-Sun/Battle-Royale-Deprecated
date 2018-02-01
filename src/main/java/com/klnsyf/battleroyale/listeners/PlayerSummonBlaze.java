@@ -20,6 +20,8 @@ import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.configuration.Configuration;
 import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.PlayerSummonBlazeEvent;
+import com.klnsyf.battleroyale.messages.MessageKey;
+import com.klnsyf.battleroyale.messages.Messages;
 
 public class PlayerSummonBlaze implements Listener {
 	private final BattleRoyale plugin = BattleRoyale.plugin;
@@ -60,7 +62,7 @@ public class PlayerSummonBlaze implements Listener {
 				if ((boolean) configuation.getValue(event.getPlayer().getWorld(),
 						ConfigurationKey.BATTLE_MISC_SUMMON_BLAZE_ENABLED)) {
 					event.getPlayer().getWorld().strikeLightningEffect(event.getBlock().getLocation());
-					event.getPlayer().sendMessage(prefix + "¡ìaYou have successfully summon a blaze");
+					event.getPlayer().sendMessage(prefix + "¡ìa" + Messages.getMessage(MessageKey.PLAYER_SUMMON_BLAZE_SUCCESS));
 					event.getBlock().setType(Material.LAVA);
 					Blaze blaze = (Blaze) event.getPlayer().getWorld().spawnEntity(event.getBlock().getLocation(),
 							EntityType.BLAZE);

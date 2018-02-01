@@ -19,6 +19,8 @@ import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.configuration.Configuration;
 import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.PlayerUseCompassEvent;
+import com.klnsyf.battleroyale.messages.MessageKey;
+import com.klnsyf.battleroyale.messages.Messages;
 import com.klnsyf.battleroyale.utils.WorldBorderHandler;
 
 public class PlayerUseCompass implements Listener {
@@ -82,7 +84,7 @@ public class PlayerUseCompass implements Listener {
 		Location loc = player.getEyeLocation();
 		player.spawnParticle(Particle.SPELL_WITCH, loc, 256);
 		player.getWorld().strikeLightningEffect(player.getLocation());
-		player.sendMessage("[§6Battle Royale§r] §aWorldBorder Information:");
+		player.sendMessage(prefix + "§a" + Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_WORLD_BORDER) + ":");
 		int buffer = ((int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius())
 				- ((int) Math.max(Math.abs(loc.getX()), Math.abs(loc.getZ())));
 		String s;
@@ -96,16 +98,18 @@ public class PlayerUseCompass implements Listener {
 			s = "§4";
 		}
 		if (BattlefieldHandler.battlefields.get(player.getWorld()).isWorldBorderShrinking()) {
-			player.sendMessage("§7>> §aRadius: " + (int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius()
+			player.sendMessage("§7>> §a" + Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_RADIUS) + ": "
+					+ (int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius()
 					+ "m ("
-					+ s + buffer + "§am)" + "    Speed: "
+					+ s + buffer + "§am)" + "   " + Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_SPEED) + ": "
 					+ new DecimalFormat("0.00").format(BattlefieldHandler.battlefields.get(player.getWorld()).getShrinkSpeed())
 					+ " §am/s");
 		} else {
 			player.sendMessage(
-					"§7>> §aRadius: " + (int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius() + "m");
+					"§7>> §a" + Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_RADIUS) + ": "
+							+ (int) new WorldBorderHandler(player.getWorld()).getWorldBorderRadius() + "m");
 		}
-		player.sendMessage(prefix + "§aSurvivor Locator:");
+		player.sendMessage(prefix + "§a" + Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_SURVIVOR) + ":");
 		playerLocate(player);
 
 	}
@@ -115,7 +119,7 @@ public class PlayerUseCompass implements Listener {
 			if (sender == player) {
 				continue;
 			}
-			String s = "???";
+			String s = Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_ANONYMOUS);
 			if (!(boolean) configuation.getValue(sender.getWorld(), ConfigurationKey.BATTLE_MISC_HIDE_NAME)) {
 				s = player.getName();
 			}

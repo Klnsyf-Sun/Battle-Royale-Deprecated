@@ -18,6 +18,8 @@ import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.configuration.Configuration;
 import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.BattleStartEvent;
+import com.klnsyf.battleroyale.messages.MessageKey;
+import com.klnsyf.battleroyale.messages.Messages;
 import com.klnsyf.battleroyale.utils.ActionbarMessage;
 import com.klnsyf.battleroyale.utils.PlayerReset;
 import com.klnsyf.battleroyale.utils.WorldBorderHandler;
@@ -25,7 +27,6 @@ import com.klnsyf.battleroyale.utils.WorldBorderHandler;
 public class BattleStart implements Listener {
 	private final BattleRoyale plugin = BattleRoyale.plugin;
 	private final Server server = BattleRoyale.server;
-	private final String prefix = BattleRoyale.prefix;
 	private final Configuration configuation = new Configuration();
 
 	public BattleStart() {
@@ -62,8 +63,10 @@ public class BattleStart implements Listener {
 
 	private void gameNotice(World world) {
 		for (Player player : BattlefieldHandler.battlefields.get(world).players) {
-			new ActionbarMessage().sendActionbarMessage(player, "-= Game Start =-");
-			player.sendTitle(prefix, "-= Game Start =-", 0, 40, 40);
+			new ActionbarMessage().sendActionbarMessage(player,
+					"-= " + Messages.getMessage(MessageKey.EVENTS_BATTLE_START) + " =-");
+			player.sendTitle("[¡ì6Battle Royale¡ìr]", "-= " + Messages.getMessage(MessageKey.EVENTS_BATTLE_START) + " =-", 0,
+					40, 40);
 			player.playEffect(player.getLocation(), Effect.CLICK1, null);
 			player.spawnParticle(Particle.SPELL_WITCH, player.getEyeLocation(), 255, null);
 		}

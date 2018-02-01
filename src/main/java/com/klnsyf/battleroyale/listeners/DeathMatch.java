@@ -32,9 +32,10 @@ public class DeathMatch implements Listener {
 					event.getWorld().setGameRuleValue("naturalRegeneration", "false");
 					server.getConsoleSender().sendMessage(prefix + Messages.getMessage(MessageKey.EVENTS_SHRINK_STOPPED));
 					for (Player player : BattlefieldHandler.battlefields.get(event.getWorld()).players) {
-						player.sendTitle("[¡ì6 Battle Royale¡ìr]", "-= ¡ìcDeath Match¡ìr =-", 10, 20, 10);
+						player.sendTitle("[¡ì6Battle Royale¡ìr]", "-= ¡ìc" + Messages.getMessage(MessageKey.DEATH_MATCH) + "¡ìr =-",
+								10, 20, 10);
 						new ActionbarMessageSetup().getActionBarMessage().sendActionbarMessage(player,
-								"¡ìc¡ìlWorld Border Has Stopped Shrinking");
+								"¡ìc¡ìl" + Messages.getMessage(MessageKey.DEATH_MATCH_ACTION_BAR));
 					}
 				}
 			}

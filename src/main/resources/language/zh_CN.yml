@@ -1,0 +1,48 @@
+COMMANDS:
+  HELP: "§6=================[§b帮助§6]================="
+  TIP: "§a提示: 你可以使用§6/br§a以代替§6/battleroyale"
+  UNDEFINDED: "§c未定义的子命令: §b%COMMAND"
+  UNDEFINDED_WORLD: "§c找不到世界: §b%WORLDNAME"
+  WORLD_PRESETTED: "§c世界§b%WORLDNAME§c已准备"
+  WORLD_UNPRESETTED: "§c世界§b%WORLDNAME§c未准备"
+
+EVENTS:
+  SHRINK_STOPPED: "§c世界边界已停止收缩"
+  SECOND: "秒"
+  BATTLE_START: "战斗开始"
+
+BATTLEFIELD_PRESET:
+  UNDEFINDED_CONFIGURATIONFILE: "§c找不到配置文件: §b%CONFIGNAME"
+  SUCCESS_CONSOLE: "§a战场§b%WORLDNAME§a已以配置文件§b%CONFIGNAME§a成功准备\n§7>> §a最大玩家数: §b%MAXPLAYER"
+  SUCCESS_PLAYER: "§a战场§b%WORLDNAME§a已准备\n§7>> §a最大玩家数: §b%MAXPLAYER\n§7>> §a你可以使用指令§6/battleroyale join §b%WORLDNAME§r以加入该战场"
+  
+PLAYER_JOIN_BATTLEFIELD:
+  JOINED: "§c你已加入战场§b%WORLDNAME"
+  FULL: "§c战场§b%WORLDNAME§c已满"
+  SUCCESS: "§d%PLAYERNAME§a加入了战场§b%WORLDNAME §a(§b%CURRENTPLAYER§a/%MAXPLAYER)"
+
+PLAYER_ACCELERATE_WORLD_BORDER_SHRINKING:
+  SUCCESS_ANONYMOUS: "§d某人§c加速了世界边界收缩"
+  SUCCESS: "§d%PLAYERNAME§c加速了世界边界收缩"
+
+BATTLE_END:
+  WINNER: "-= Winner: §d%PLAYERNAME §r=-"
+  FORCED_END: "§c游戏已中止"
+
+PLAYER_USE_COMPASS:
+  WORLD_BORDER: "世界边界信息"
+  RADIUS: "当前半径"
+  SPEED: "收缩速度"
+  SURVIVOR: "存活者坐标"
+  ANONYMOUS: "玩家"
+
+PLAYER_SUMMON_BLAZE:
+  SUCCESS: "你已成功召唤烈焰人"
+
+PLAYER_DEATH:
+  PLAYER_KILLED: "§d%PLAYERNAME§c被§d%KILLERNAME§c杀了"
+  NATURE_DEATH: "§d%PLAYERNAME§c死了"
+
+DEATH_MATCH:
+  DEATH_MATCH: "Death Match"
+  ACTION_BAR_INFO: "世界边界已停止收缩"
