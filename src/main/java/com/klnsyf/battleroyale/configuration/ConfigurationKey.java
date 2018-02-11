@@ -26,6 +26,7 @@ public enum ConfigurationKey {
 	BATTLE_MISC_COMPASS_ENABLED("battle-misc-option.compass-option.enabled", boolean.class, true),
 	BATTLE_MISC_COMPASS_MODE("battle-misc-option.compass-option.mode", boolean.class, true),
 	BATTLE_MISC_COMPASS_COOLDOWN("battle-misc-option.compass-option.cooldown", int.class, 100),
+	BATTLE_MISC_COMPASS_MAX_SHOWN_PLAYER("battle-misc-option.compass-option.max-shown-player", int.class, 4),
 	BATTLE_MISC_SHRINK_ACCELERATING_ENABLED("battle-misc-option.shrink-accelerating-option.enabled", boolean.class, true),
 	BATTLE_MISC_SHRINK_ACCELERATING_ITEM("battle-misc-option.shrink-accelerating-option.active-item", String.class,
 			"IRON_BLOCK"),

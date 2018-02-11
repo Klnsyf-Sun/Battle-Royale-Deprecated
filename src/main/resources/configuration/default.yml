@@ -33,6 +33,7 @@ battle-misc-option:
     enabled: True    # Boolean("true" OR "false", IgnoreCase)
     mode: True    # Boolean("true" OR "false", IgnoreCase)
     cooldown: 100    # Integer
+    max-shown-player: 4   # Integer
   shrink-accelerating-option:
     enabled: True    # Boolean("true" OR "false", IgnoreCase)
     activate-item: IRON_BLOCK    # Material

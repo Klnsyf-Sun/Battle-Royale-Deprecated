@@ -112,7 +112,7 @@ public class BattleLoad implements Listener {
 			new BukkitRunnable() {
 
 				final int totalTime = configuation.getValue(world, ConfigurationKey.BATTLE_MISC_LOADING_TIME);
-				final int block = 15;
+				final int block = 64;
 				final double totalTick = 20 * totalTime;
 				double tick = totalTick;
 
@@ -120,21 +120,21 @@ public class BattleLoad implements Listener {
 					if (BattlefieldHandler.battlefields.get(world) == null) {
 						this.cancel();
 					}
-					String s = Messages.getMessage(MessageKey.EVENTS_BATTLE_START);
+					String s = Messages.getMessage(MessageKey.EVENTS_BATTLE_START)+"  ";
 
 					double i = block;
 					for (; i > Math.round(block * tick / totalTick); i--) {
-						s = s + "¡ì4¨€";
+						s = s + "Â§4Â§lï¿¨";
 					}
 					for (i = Math.round(block * tick / totalTick); i > 0; i--) {
-						s = s + "¡ìa¨€";
+						s = s + "Â§aÂ§lï¿¨";
 					}
-					s = s + " ¡ìr" + new DecimalFormat("0.0").format(tick * totalTime / totalTick) + " "
+					s = s + " Â§r" + new DecimalFormat("0.0").format(tick * totalTime / totalTick) + " "
 							+ Messages.getMessage(MessageKey.EVENTS_SECOND);
 					new ActionbarMessage().sendActionbarMessage(player, s);
 					if (tick <= 10 * 20 && tick % 20 == 0) {
 						player.playEffect(player.getLocation(), Effect.CLICK1, null);
-						player.sendTitle("[¡ì6Battle Royale¡ìr]", "-= " + (int) (tick / 20) + " =-", 0, 200,
+						player.sendTitle("[Â§6Battle RoyaleÂ§r]", "-= " + (int) (tick / 20) + " =-", 0, 200,
 								0);
 					}
 					player.spawnParticle(Particle.SPELL_WITCH, player.getLocation(), 255, 0,

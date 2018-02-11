@@ -19,6 +19,8 @@ public class ActionbarMessageSetup {
 		}
 		if (version.equals("v1_12_R1")) {
 			actionbarMessage = new ActionbarMessage_v1_12_R1();
+		} else {
+			actionbarMessage = new ActionbarMessage_Old();
 		}
 		return actionbarMessage != null;
 	}

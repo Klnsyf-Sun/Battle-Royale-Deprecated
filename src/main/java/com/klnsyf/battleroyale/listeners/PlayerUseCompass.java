@@ -1,6 +1,7 @@
 package com.klnsyf.battleroyale.listeners;
 
 import java.text.DecimalFormat;
+import java.util.TreeMap;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,9 +59,14 @@ public class PlayerUseCompass implements Listener {
 				if ((boolean) configuation.getValue(event.getPlayer().getWorld(), ConfigurationKey.BATTLE_MISC_COMPASS_MODE)) {
 					if (event.getMaterial() == Material.COMPASS) {
 						if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-							server.getPluginManager().callEvent(new PlayerUseCompassEvent(event.getPlayer()));
-							event.getPlayer().setCooldown(Material.COMPASS, configuation.getValue(event.getPlayer().getWorld(),
-									ConfigurationKey.BATTLE_MISC_COMPASS_COOLDOWN));
+							if (event.getPlayer().getCooldown(Material.COMPASS) > 0) {
+								event.setCancelled(true);
+							} else {
+								server.getPluginManager().callEvent(new PlayerUseCompassEvent(event.getPlayer()));
+								event.getPlayer().setCooldown(Material.COMPASS,
+										configuation.getValue(event.getPlayer().getWorld(),
+												ConfigurationKey.BATTLE_MISC_COMPASS_COOLDOWN));
+							}
 						}
 					}
 				}
@@ -115,15 +121,26 @@ public class PlayerUseCompass implements Listener {
 	}
 
 	public void playerLocate(Player sender) {
+		TreeMap<Double, Player> players = new TreeMap<Double, Player>();
 		for (Player player : BattlefieldHandler.battlefields.get(sender.getWorld()).players) {
 			if (sender == player) {
 				continue;
 			}
+			double dis = sender.getLocation().distance(player.getLocation());
+			players.put(dis, player);
+		}
+		for (int index = 1; index < Math.max(players.size(), (int) configuation.getValue(sender.getWorld(),
+				ConfigurationKey.BATTLE_MISC_COMPASS_MAX_SHOWN_PLAYER)); index++) {
+			if (players.firstEntry() == null) {
+				break;
+			}
+			Player player = players.firstEntry().getValue();
+			double dis = players.firstEntry().getKey();
+			players.remove(dis, player);
 			String s = Messages.getMessage(MessageKey.PLAYER_USE_COMPASS_ANONYMOUS);
 			if (!(boolean) configuation.getValue(sender.getWorld(), ConfigurationKey.BATTLE_MISC_HIDE_NAME)) {
 				s = player.getName();
 			}
-			int dis = (int) sender.getLocation().distance(player.getLocation());
 			String c;
 			if (dis >= 800) {
 				c = "§a";
@@ -135,7 +152,8 @@ public class PlayerUseCompass implements Listener {
 				c = "§4";
 			}
 			sender.sendMessage("§7>> §d " + s + " §b>§f " + (int) player.getLocation().getX() + ", "
-					+ (int) player.getLocation().getZ() + " (" + c + dis + "§am)");
+					+ (int) player.getLocation().getZ() + " (" + c + (int) dis + "§am)");
 		}
 	}
+
 }

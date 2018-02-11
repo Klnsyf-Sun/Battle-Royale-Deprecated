@@ -13,6 +13,7 @@ import com.klnsyf.battleroyale.listeners.PlayerAccelerateWorldBorderShrinking;
 import com.klnsyf.battleroyale.listeners.PlayerDeath;
 import com.klnsyf.battleroyale.listeners.PlayerJoinBattlefield;
 import com.klnsyf.battleroyale.listeners.PlayerQuit;
+import com.klnsyf.battleroyale.listeners.PlayerQuitBattlefield;
 import com.klnsyf.battleroyale.listeners.PlayerSummonBlaze;
 import com.klnsyf.battleroyale.listeners.PlayerThrowPrimedTnt;
 import com.klnsyf.battleroyale.listeners.PlayerUseCompass;
@@ -33,6 +34,7 @@ public class Listeners {
 		new PlayerDeath();
 		new PlayerJoinBattlefield();
 		new PlayerQuit();
+		new PlayerQuitBattlefield();
 		new PlayerSummonBlaze();
 		new PlayerThrowPrimedTnt();
 		new PlayerUseCompass();

@@ -1,24 +1,19 @@
 package com.klnsyf.battleroyale.commands;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.klnsyf.battleroyale.BattleRoyale;
-import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
-import com.klnsyf.battleroyale.configuration.Configuration;
-import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.BattleEndEvent;
 import com.klnsyf.battleroyale.events.BattleLoadEvent;
 import com.klnsyf.battleroyale.events.BattlefieldPresetEvent;
 import com.klnsyf.battleroyale.events.PlayerJoinBattlefieldEvent;
+import com.klnsyf.battleroyale.events.PlayerQuitBattlefieldEvent;
 import com.klnsyf.battleroyale.messages.MessageKey;
 import com.klnsyf.battleroyale.messages.Messages;
 
@@ -76,9 +71,9 @@ public class Commands implements CommandExecutor {
 		return false;
 	}
 
-	@SubCommand(command = "preset", premission = "battleroyale.main", arg = "[worldName] [ConfigName] [maxPlayer] [autoStart]", des = "Preset a battlefield")
+	@SubCommand(command = "preset", premission = "battleroyale.preset", arg = "[worldName] [ConfigName] [maxPlayer] [autoStart]", des = "Preset a battlefield")
 	public void preset(CommandSender sender, String[] args) {
-		if (sender.hasPermission("battleroyale.main")) {
+		if (sender.hasPermission("battleroyale.preset")) {
 			if (args.length == 1) {
 				if (sender instanceof Player) {
 					server.getPluginManager()
@@ -124,13 +119,27 @@ public class Commands implements CommandExecutor {
 			} else {
 				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcInvaild amount of arguments");
 			}
-		} else
+		} else {
 			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
+		}
 	}
 
-	@SubCommand(command = "start", premission = "battleroyale.main", arg = "[worldName]", des = "Game Start!")
+	@SubCommand(command = "quit", premission = "battleroyale.quit")
+	public void quit(CommandSender sender, String[] args) {
+		if (sender.hasPermission("battleroyale.quit")) {
+			if (sender instanceof Player) {
+				server.getPluginManager().callEvent(new PlayerQuitBattlefieldEvent((Player) sender));
+			} else {
+				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcOnly Player can use this command");
+			}
+		} else {
+			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
+		}
+	}
+
+	@SubCommand(command = "start", premission = "battleroyale.start", arg = "[worldName]", des = "Game Start!")
 	public void start(CommandSender sender, String[] args) {
-		if (sender.hasPermission("battleroyale.main")) {
+		if (sender.hasPermission("battleroyale.start")) {
 			if (args.length == 2) {
 				server.getPluginManager()
 						.callEvent(new BattleLoadEvent(sender, args[1]));
@@ -142,9 +151,9 @@ public class Commands implements CommandExecutor {
 		}
 	}
 
-	@SubCommand(command = "reset", premission = "battleroyale.main", arg = "[worldName]", des = "Reset a battlefield")
+	@SubCommand(command = "reset", premission = "battleroyale.reset", arg = "[worldName]", des = "Reset a battlefield")
 	public void end(CommandSender sender, String[] args) {
-		if (sender.hasPermission("battleroyale.main")) {
+		if (sender.hasPermission("battleroyale.reset")) {
 			if (args.length == 2) {
 				server.getPluginManager()
 						.callEvent(new BattleEndEvent(sender, server.getWorld(args[1]), null));
@@ -154,34 +163,6 @@ public class Commands implements CommandExecutor {
 		} else {
 			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
 		}
-	}
-
-	@SubCommand(command = "BFT", premission = "battleroyale.main", arg = "???", des = "Just a test")
-	public void BFT(CommandSender sender, String[] args) {
-		sender.sendMessage(prefix + "¡ìaBattlefields:");
-		for (World world : BattlefieldHandler.battlefields.keySet()) {
-			String statue = "¡ì7>> ¡ìb" + world.getName() + "(" + BattlefieldHandler.battlefields.get(world).getMaxPlayer() + "/"
-					+ BattlefieldHandler.battlefields.get(world).isAutoStart() + ")" + " ¡ì3> ¡ìd";
-			for (Player player : BattlefieldHandler.battlefields.get(world).players) {
-				statue = statue + "[" + player.getName() + "] ";
-			}
-			sender.sendMessage(statue);
-		}
-	}
-
-	@SubCommand(command = "CFG", premission = "battleroyale.main", arg = "???", des = "Just a test")
-	public void CFT(CommandSender sender, String[] args) {
-		new YamlConfiguration();
-		sender.sendMessage(new Configuration().getValue(
-				YamlConfiguration
-						.loadConfiguration(new File(BattleRoyale.dataFolder.getPath() + "\\configuration\\default.yml")),
-				ConfigurationKey.BATTLE_MISC_INIT_SUPPLY) + ", "
-				+ new Configuration().getValue(
-						YamlConfiguration
-								.loadConfiguration(
-										new File(BattleRoyale.dataFolder.getPath() + "\\configuration\\default.yml")),
-						ConfigurationKey.BATTLE_MISC_INIT_SUPPLY).getClass());
-
 	}
 
 }

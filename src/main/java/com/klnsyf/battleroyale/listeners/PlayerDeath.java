@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
 import com.klnsyf.battleroyale.BattleRoyale;
 import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.configuration.Configuration;
@@ -59,15 +58,15 @@ public class PlayerDeath implements Listener {
 				}
 				new AutoRespawnSetup().getAutoRespawn().autoRespawn(event.getEntity(), event.getEntity().getLocation());
 				BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.remove(event.getEntity());
-				if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players.size() == 1) {
+				if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.size() == 1) {
 					server.getPluginManager()
 							.callEvent(new BattleEndEvent(server.getConsoleSender(), event.getEntity().getWorld(),
-									BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players.get(0)));
-				}
-				if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).players.size() < 1) {
+									BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.get(0)));
+				} else if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.size() < 1) {
 					server.getPluginManager()
 							.callEvent(new BattleEndEvent(server.getConsoleSender(), event.getEntity().getWorld(),
 									null));
+
 				}
 			}
 		}

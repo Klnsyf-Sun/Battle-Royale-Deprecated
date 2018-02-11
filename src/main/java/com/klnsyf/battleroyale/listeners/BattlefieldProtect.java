@@ -2,6 +2,7 @@ package com.klnsyf.battleroyale.listeners;
 
 import org.bukkit.Server;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -28,7 +29,7 @@ public class BattlefieldProtect implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onEntityDamage(EntityDamageEvent event) {
 		if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()) != null) {
 			if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).getStatue() != 2) {

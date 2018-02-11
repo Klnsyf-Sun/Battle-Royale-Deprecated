@@ -2,10 +2,13 @@ package com.klnsyf.battleroyale;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang.SystemUtils;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.commands.Commands;
@@ -30,15 +33,32 @@ public class BattleRoyale extends JavaPlugin {
 		BattleRoyale.settings = new Settings();
 
 		saveDefaultConfig();
-		saveResource("language\\en_US.yml", false);
-		saveResource("configuration\\default.yml", false);
+		if (!new File(dataFolder, "\\language\\en_US.yml").exists()) {
+			saveResource("language\\en_US.yml", false);
+		}
+		if (!new File(dataFolder, "\\configuration\\default.yml").exists()) {
+			saveResource("configuration\\default.yml", false);
+		}
 
 		if (!SystemUtils.isJavaVersionAtLeast(1.8f)) {
 			throw new IllegalStateException("[Battle Royale] Required Java Version is at least 1.8!");
 		}
 
+		final String version = getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit.", "");
+		final List<String> compatible = Arrays.asList("v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1");
+		if (!(compatible.contains(version))) {
+			getServer().getPluginManager().disablePlugin(this);
+			throw new IllegalStateException("[Battle Royale] Required Minecraft Server Version is at least 1.9!");
+		}
+
 		if (Settings.isCheckUpdate) {
-			new UpdateChecker().checkUpdate();
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					new UpdateChecker().checkUpdate();
+					this.cancel();
+				}
+			}.runTaskAsynchronously(this);
 		}
 
 		if (!Messages.language.exists()) {

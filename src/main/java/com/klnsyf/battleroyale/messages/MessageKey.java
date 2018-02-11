@@ -96,6 +96,9 @@ public enum MessageKey {
 
 	// World Border Has Stopped Shrinking
 	DEATH_MATCH_ACTION_BAR("DEATH_MATCH.ACTION_BAR_INFO"),
+	
+	// ¡ìd%PLAYERNAME ¡ìahas successfully quit battlefield ¡ìb%WORLDNAME
+	PLAYER_QUIT_BATTLEFIELD_SUCCESS("PLAYER_QUIT_BATTLEFIELD.SUCCESS","%PLAYERNAME","%WORLDNAME"),
 
 	;
 	private String key;

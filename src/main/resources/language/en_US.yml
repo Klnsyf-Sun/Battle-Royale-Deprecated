@@ -17,9 +17,12 @@ BATTLEFIELD_PRESET:
   SUCCESS_PLAYER: "§aBattlefield §b%WORLDNAME §ahas been presetted\n§7>> §aMax Player: §b%MAXPLAYER\n§7>> §aYou can join this battlefield by command: §6/battleroyale join §b%WORLDNAME"
   
 PLAYER_JOIN_BATTLEFIELD:
-  JOINED: "§cYou have already join battlefield §b%WORLDNAME"
+  JOINED: "§cYou have already joined battlefield §b%WORLDNAME"
   FULL: "§cBattlefield §b%WORLDNAME §cis full"
   SUCCESS: "§d%PLAYERNAME §ahas joined battlefield §b%WORLDNAME §a(§b%CURRENTPLAYER§a/%MAXPLAYER)"
+
+PLAYER_QUIT_BATTLEFIELD:
+  SUCCESS: "§d%PLAYERNAME §ahas successfully quit battlefield §b%WORLDNAME"
 
 PLAYER_ACCELERATE_WORLD_BORDER_SHRINKING:
   SUCCESS_ANONYMOUS: "§dSomeone §caccelerated the world border's shrinking"
