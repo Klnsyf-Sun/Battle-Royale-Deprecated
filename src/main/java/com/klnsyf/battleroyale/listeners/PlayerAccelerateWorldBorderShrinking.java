@@ -49,8 +49,12 @@ public class PlayerAccelerateWorldBorderShrinking implements Listener {
 					event.setCancelled(true);
 				} else {
 					if (BattlefieldHandler.battlefields.get(event.getWorld()).isWorldBorderShrinking()) {
-						event.getPlayer().getInventory().getItemInMainHand()
-								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+						if (event.getPlayer().getInventory().getItemInMainHand().getAmount() > 1) {
+							event.getPlayer().getInventory().getItemInMainHand()
+									.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+						} else {
+							event.getPlayer().getInventory().removeItem(event.getPlayer().getInventory().getItemInMainHand());
+						}
 						new WorldBorderHandler(event.getWorld()).accerateShrink(
 								configuation.getValue(event.getWorld(), ConfigurationKey.WORLD_BORDER_MIN_RADIUS),
 								configuation.getValue(event.getWorld(), ConfigurationKey.BATTLE_MISC_SHRINK_ACCELERATING_SPEED),

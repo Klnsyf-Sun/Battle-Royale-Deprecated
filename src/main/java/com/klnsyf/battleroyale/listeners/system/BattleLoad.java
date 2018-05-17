@@ -1,4 +1,4 @@
-package com.klnsyf.battleroyale.listeners;
+package com.klnsyf.battleroyale.listeners.system;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -100,10 +100,10 @@ public class BattleLoad implements Listener {
 					.getLocation();
 			location.setY(location.getY() - 1);
 			location.getBlock().setType(Material.BEDROCK);
-			location.setY(location.getY() + 1);
+			location.setY(location.getY() + 2);
 			player.teleport(location);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1103700, 127, false, false));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1103700, 128, false, false));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 1103700, 255, false, false));
 		}
 	}
 
@@ -120,14 +120,14 @@ public class BattleLoad implements Listener {
 					if (BattlefieldHandler.battlefields.get(world) == null) {
 						this.cancel();
 					}
-					String s = Messages.getMessage(MessageKey.EVENTS_BATTLE_START)+"  ";
+					String s = Messages.getMessage(MessageKey.EVENTS_BATTLE_START) + "  ";
 
 					double i = block;
 					for (; i > Math.round(block * tick / totalTick); i--) {
-						s = s + "§4§l￨";
+						s = s + "§4§l|";
 					}
 					for (i = Math.round(block * tick / totalTick); i > 0; i--) {
-						s = s + "§a§l￨";
+						s = s + "§a§l|";
 					}
 					s = s + " §r" + new DecimalFormat("0.0").format(tick * totalTime / totalTick) + " "
 							+ Messages.getMessage(MessageKey.EVENTS_SECOND);

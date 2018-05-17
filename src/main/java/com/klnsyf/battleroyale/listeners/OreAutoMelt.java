@@ -29,14 +29,16 @@ public class OreAutoMelt implements Listener {
 				if ((boolean) configuation.getValue(event.getBlock().getWorld(), ConfigurationKey.BATTLE_MISC_ORE_AUTO_MELT)) {
 					if (event.getBlock().getType() == Material.IRON_ORE
 							|| event.getBlock().getType() == Material.GOLD_ORE) {
-						event.setCancelled(true);
-						Location l = event.getBlock().getLocation();
-						Material m = event.getBlock().getType();
-						event.getBlock().setType(Material.AIR);
-						if (m == Material.IRON_ORE) {
-							event.getBlock().getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_INGOT, 1));
-						} else if (m == Material.GOLD_ORE) {
-							event.getBlock().getWorld().dropItemNaturally(l, new ItemStack(Material.GOLD_INGOT, 1));
+						if (event.getBlock().getDrops(event.getPlayer().getInventory().getItemInMainHand()).size() > 0) {
+							event.setCancelled(true);
+							Location l = event.getBlock().getLocation();
+							Material m = event.getBlock().getType();
+							event.getBlock().setType(Material.AIR);
+							if (m == Material.IRON_ORE) {
+								event.getBlock().getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_INGOT, 1));
+							} else if (m == Material.GOLD_ORE) {
+								event.getBlock().getWorld().dropItemNaturally(l, new ItemStack(Material.GOLD_INGOT, 1));
+							}
 						}
 					}
 				}

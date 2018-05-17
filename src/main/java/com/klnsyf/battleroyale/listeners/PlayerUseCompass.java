@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import com.klnsyf.battleroyale.BattleRoyale;
 import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
@@ -123,7 +124,10 @@ public class PlayerUseCompass implements Listener {
 	public void playerLocate(Player sender) {
 		TreeMap<Double, Player> players = new TreeMap<Double, Player>();
 		for (Player player : BattlefieldHandler.battlefields.get(sender.getWorld()).players) {
-			if (sender == player) {
+			if (sender == player
+					|| ((boolean) configuation.getValue(sender.getWorld(),
+							ConfigurationKey.BATTLE_MISC_COMPASS_IGNORE_INVISIBLE)
+							&& player.getPotionEffect(PotionEffectType.INVISIBILITY) != null)) {
 				continue;
 			}
 			double dis = sender.getLocation().distance(player.getLocation());

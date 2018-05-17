@@ -19,32 +19,40 @@ world-border-option:
     max: 2048    # Integer
   shrink-speed: 1.0    # Double
 battle-misc-option:
-  protect-animal: True    # Boolean("true" OR "false", IgnoreCase)
-  ore-auto-melt: False    # Boolean("true" OR "false", IgnoreCase)
-  hide-player-name: True    # Boolean("true" OR "false", IgnoreCase)
+  protect-animal: true    # Boolean("true" OR "false", IgnoreCase)
+  ore-auto-melt: false    # Boolean("true" OR "false", IgnoreCase)
+  hide-player-name: true    # Boolean("true" OR "false", IgnoreCase)
   init-supply:    
   # - Material: Integer
   # - Must be exact Material ID, see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-    - REDSTONE: 1
     - BREAD: 4
     - BOAT: 1
+  stone-droplist:
+  # - Material: Integer
+  # - Must be exact Material ID, see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+    - REDSTONE: 1000
+    - GLOWSTONE_DUST: 1000
+    - GLOWSTONE_DUST: 1000
+    - GLOWSTONE_DUST: 1000
+    - GLOWSTONE_DUST: 1000
   loading-time: 5    # Integer
   compass-option:
-    enabled: True    # Boolean("true" OR "false", IgnoreCase)
-    mode: True    # Boolean("true" OR "false", IgnoreCase)
+    enabled: true    # Boolean("true" OR "false", IgnoreCase)
+    mode: true    # Boolean("true" OR "false", IgnoreCase)
     cooldown: 100    # Integer
     max-shown-player: 4   # Integer
+    skip-invisible-players: true
   shrink-accelerating-option:
-    enabled: True    # Boolean("true" OR "false", IgnoreCase)
+    enabled: true    # Boolean("true" OR "false", IgnoreCase)
     activate-item: IRON_BLOCK    # Material
     accelerate-speed: 1.0    # Double
     duration: 1200    # Integer
     cooldown: 300    # Integer
     protect-time: 6000    # Integer
   summon-blaze:
-    enabled: True    # Boolean("true" OR "false", IgnoreCase)
+    enabled: true    # Boolean("true" OR "false", IgnoreCase)
   deathmatch:
-    enabled: True    # Boolean("true" OR "false", IgnoreCase
+    enabled: true    # Boolean("true" OR "false", IgnoreCase
   killer-bonus:
     health: 5    # Integer
     saturation: 5    # Integer

@@ -14,6 +14,7 @@ import com.klnsyf.battleroyale.events.BattleLoadEvent;
 import com.klnsyf.battleroyale.events.BattlefieldPresetEvent;
 import com.klnsyf.battleroyale.events.PlayerJoinBattlefieldEvent;
 import com.klnsyf.battleroyale.events.PlayerQuitBattlefieldEvent;
+import com.klnsyf.battleroyale.events.PlayerRequestBattlefieldBookEvent;
 import com.klnsyf.battleroyale.messages.MessageKey;
 import com.klnsyf.battleroyale.messages.Messages;
 
@@ -109,15 +110,17 @@ public class Commands implements CommandExecutor {
 	@SubCommand(command = "join", premission = "battleroyale.join", arg = "[worldName]", des = "Join into preseted battlefield")
 	public void join(CommandSender sender, String[] args) {
 		if (sender.hasPermission("battleroyale.join")) {
-			if (args.length == 2) {
-				if (sender instanceof Player) {
+			if (sender instanceof Player) {
+				if (args.length == 1) {
+					server.getPluginManager().callEvent(new PlayerRequestBattlefieldBookEvent((Player) sender));
+				} else if (args.length == 2) {
 					server.getPluginManager()
 							.callEvent(new PlayerJoinBattlefieldEvent((Player) sender, args[1]));
 				} else {
-					sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcOnly Player can use this command");
+					sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcInvaild amount of arguments");
 				}
 			} else {
-				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcInvaild amount of arguments");
+				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcOnly Player can use this command");
 			}
 		} else {
 			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");

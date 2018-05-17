@@ -52,7 +52,6 @@ public class WorldBorderHandler {
 		isWorldBorderShrinking(minRadius, getWorldBorderRadius());
 		controlWorldBorder(minRadius, BattlefieldHandler.battlefields.get(world).getShrinkSpeed() + accelerateSpeed);
 		new BukkitRunnable() {
-
 			public void run() {
 				if (BattlefieldHandler.battlefields.get(world) != null) {
 					BattlefieldHandler.battlefields.get(world)

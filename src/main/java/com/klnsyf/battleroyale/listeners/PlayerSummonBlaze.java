@@ -1,6 +1,7 @@
 package com.klnsyf.battleroyale.listeners;
 
 import java.util.List;
+import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -69,7 +70,9 @@ public class PlayerSummonBlaze implements Listener {
 					blaze.setGlowing(true);
 					blaze.setTarget(event.getPlayer());
 					blaze.setMaximumAir(11037);
-					blaze.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 110370, 0, false, false));
+					blaze.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 110370, 1, false, false));
+					blaze.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 110370, 0, false, false));
+					blaze.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 110370, 4, false, false));
 				}
 			}
 		}
@@ -88,6 +91,7 @@ public class PlayerSummonBlaze implements Listener {
 							drops.clear();
 							drops.add(new ItemStack(Material.BLAZE_ROD));
 							drops.add(new ItemStack(Material.NETHER_STALK));
+							drops.add(new ItemStack(Material.GLOWSTONE_DUST, new Random().nextInt(4) + 1));
 						}
 					}
 				}

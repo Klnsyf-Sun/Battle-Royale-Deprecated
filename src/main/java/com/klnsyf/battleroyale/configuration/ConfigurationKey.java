@@ -26,6 +26,7 @@ public enum ConfigurationKey {
 	BATTLE_MISC_COMPASS_ENABLED("battle-misc-option.compass-option.enabled", boolean.class, true),
 	BATTLE_MISC_COMPASS_MODE("battle-misc-option.compass-option.mode", boolean.class, true),
 	BATTLE_MISC_COMPASS_COOLDOWN("battle-misc-option.compass-option.cooldown", int.class, 100),
+	BATTLE_MISC_COMPASS_IGNORE_INVISIBLE("battle-misc-option.compass-option.ignore-invisible", boolean.class, true),
 	BATTLE_MISC_COMPASS_MAX_SHOWN_PLAYER("battle-misc-option.compass-option.max-shown-player", int.class, 4),
 	BATTLE_MISC_SHRINK_ACCELERATING_ENABLED("battle-misc-option.shrink-accelerating-option.enabled", boolean.class, true),
 	BATTLE_MISC_SHRINK_ACCELERATING_ITEM("battle-misc-option.shrink-accelerating-option.active-item", String.class,
@@ -37,7 +38,15 @@ public enum ConfigurationKey {
 	BATTLE_MISC_SUMMON_BLAZE_ENABLED("battle-misc-option.summon-blaze.enabled", boolean.class, true),
 	BATTLE_MISC_DEATHMATCH_ENABLED("battle-misc-option.deathmatch.enabled", boolean.class, true),
 	BATTLE_MISC_KILLER_BONUS_HEALTH("battle-misc-option.killer-bonus.health", int.class, 5),
-	BATTLE_MISC_KILLER_BONUS_SATURATION("battle-misc-option.killer-bonus.saturation", int.class, 5);
+	BATTLE_MISC_KILLER_BONUS_SATURATION("battle-misc-option.killer-bonus.saturation", int.class, 5),
+	BATTLE_MISC_DROP_LIST("battle-misc-option.drop-list", ArrayList.class, ConfigurationKey.DEFAULT_DROP_LIST),
+	BATTLE_MISC_PLAYER_GLOWING_ENABLED("battle-misc-option.player-glowing-option.enabled", boolean.class, true),
+	BATTLE_MISC_PLAYER_GLOWING_ITEM("battle-misc-option.player-glowing-option.activate-item", String.class, "GLOWSTONE"),
+	BATTLE_MISC_PLAYER_GLOWING_DURATION("battle-misc-option.player-glowing-option.duration", int.class, 20),
+	BATTLE_MISC_PLAYER_GLOWING_RADIUS("battle-misc-option.player-glowing-option.radius", int.class, 32),
+	BATTLE_MISC_PLAYER_GLOWING_IGNORE_INVISIBLE("battle-misc-option.player-glowing-option.ignore-invisible", boolean.class,
+			true),
+			;
 
 	private String path;
 	private Class<?> clazz;
@@ -48,12 +57,6 @@ public enum ConfigurationKey {
 			add(new HashMap<String, Integer>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put("REDSTONE", 1);
-				}
-			});
-			add(new HashMap<String, Integer>() {
-				private static final long serialVersionUID = 1L;
-				{
 					put("BREAD", 4);
 				}
 			});
@@ -61,6 +64,53 @@ public enum ConfigurationKey {
 				private static final long serialVersionUID = 1L;
 				{
 					put("BOAT", 1);
+				}
+			});
+		}
+	};
+
+	private final static ArrayList<Map<String, ArrayList<Map<String, Integer>>>> DEFAULT_DROP_LIST = new ArrayList<Map<String, ArrayList<Map<String, Integer>>>>() {
+		private static final long serialVersionUID = 1L;
+		{
+			add(new HashMap<String, ArrayList<Map<String, Integer>>>() {
+				private static final long serialVersionUID = 1L;
+				{
+					put("STONE",
+							new ArrayList<Map<String, Integer>>() {
+								private static final long serialVersionUID = 1L;
+								{
+									add(new HashMap<String, Integer>() {
+										private static final long serialVersionUID = 1L;
+										{
+											put("REDSTONE", 1000);
+										}
+									});
+									add(new HashMap<String, Integer>() {
+										private static final long serialVersionUID = 1L;
+										{
+											put("GLOWSTONE_DUST", 1000);
+										}
+									});
+									add(new HashMap<String, Integer>() {
+										private static final long serialVersionUID = 1L;
+										{
+											put("GLOWSTONE_DUST", 1000);
+										}
+									});
+									add(new HashMap<String, Integer>() {
+										private static final long serialVersionUID = 1L;
+										{
+											put("GLOWSTONE_DUST", 1000);
+										}
+									});
+									add(new HashMap<String, Integer>() {
+										private static final long serialVersionUID = 1L;
+										{
+											put("GLOWSTONE_DUST", 1000);
+										}
+									});
+								}
+							});
 				}
 			});
 		}

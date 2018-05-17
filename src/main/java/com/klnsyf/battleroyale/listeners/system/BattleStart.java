@@ -1,4 +1,4 @@
-package com.klnsyf.battleroyale.listeners;
+package com.klnsyf.battleroyale.listeners.system;
 
 import java.util.ArrayList;
 import java.util.Map;
