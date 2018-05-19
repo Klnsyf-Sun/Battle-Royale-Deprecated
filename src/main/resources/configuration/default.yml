@@ -17,7 +17,7 @@ world-border-option:
   radius:
     min: 64    # Integer
     max: 2048    # Integer
-  shrink-speed: 1.0    # Double
+  shrink-speed: 1.25    # Double
 battle-misc-option:
   protect-animal: true    # Boolean("true" OR "false", IgnoreCase)
   ore-auto-melt: false    # Boolean("true" OR "false", IgnoreCase)
@@ -27,28 +27,31 @@ battle-misc-option:
   # - Must be exact Material ID, see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
     - BREAD: 4
     - BOAT: 1
-  stone-droplist:
-  # - Material: Integer
-  # - Must be exact Material ID, see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
-    - REDSTONE: 1000
-    - GLOWSTONE_DUST: 1000
-    - GLOWSTONE_DUST: 1000
-    - GLOWSTONE_DUST: 1000
-    - GLOWSTONE_DUST: 1000
-  loading-time: 5    # Integer
+  drop-list:
+    - STONE:    # - Material
+    # - Material: Integer
+      - REDSTONE: 1000
+      - GLOWSTONE_DUST: 1000
+  drop-list-total-chance: 10000    # Integer
+  loading-time: 30    # Integer
   compass-option:
     enabled: true    # Boolean("true" OR "false", IgnoreCase)
     mode: true    # Boolean("true" OR "false", IgnoreCase)
     cooldown: 100    # Integer
-    max-shown-player: 4   # Integer
-    skip-invisible-players: true
+    ignore-invisible: true    # Boolean("true" OR "false", IgnoreCase)
   shrink-accelerating-option:
     enabled: true    # Boolean("true" OR "false", IgnoreCase)
     activate-item: IRON_BLOCK    # Material
-    accelerate-speed: 1.0    # Double
+    accelerate-speed: 1.25    # Double
     duration: 1200    # Integer
     cooldown: 300    # Integer
     protect-time: 6000    # Integer
+  player-glowing-option:
+    enabled: true    # Integer
+    activate-item: GLOWSTONE    # Material
+    duration: 20    # Integer
+    radius: 32.0    # Double
+    ignore-invisible: true    # Boolean("true" OR "false", IgnoreCase)
   summon-blaze:
     enabled: true    # Boolean("true" OR "false", IgnoreCase)
   deathmatch:

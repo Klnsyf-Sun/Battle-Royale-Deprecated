@@ -40,6 +40,7 @@ public enum ConfigurationKey {
 	BATTLE_MISC_KILLER_BONUS_HEALTH("battle-misc-option.killer-bonus.health", int.class, 5),
 	BATTLE_MISC_KILLER_BONUS_SATURATION("battle-misc-option.killer-bonus.saturation", int.class, 5),
 	BATTLE_MISC_DROP_LIST("battle-misc-option.drop-list", ArrayList.class, ConfigurationKey.DEFAULT_DROP_LIST),
+	BATTLE_MISC_DROP_LIST_TOTAL_CHANCE("battle-misc-option.drop-list-total-chance", int.class, 10000),
 	BATTLE_MISC_PLAYER_GLOWING_ENABLED("battle-misc-option.player-glowing-option.enabled", boolean.class, true),
 	BATTLE_MISC_PLAYER_GLOWING_ITEM("battle-misc-option.player-glowing-option.activate-item", String.class, "GLOWSTONE"),
 	BATTLE_MISC_PLAYER_GLOWING_DURATION("battle-misc-option.player-glowing-option.duration", int.class, 20),

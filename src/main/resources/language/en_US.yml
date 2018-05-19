@@ -21,12 +21,27 @@ PLAYER_JOIN_BATTLEFIELD:
   FULL: "§cBattlefield §b%WORLDNAME §cis full"
   SUCCESS: "§d%PLAYERNAME §ahas joined battlefield §b%WORLDNAME §a(§b%CURRENTPLAYER§a/%MAXPLAYER)"
 
+BATTLEFIELD_BOOK:
+  DISPLAY_NAME: "§r§6Battlefield Book"
+  LORE: "§rRight Click to Open Battlefield GUI"
+
+BATTLEFIELD_GUI:
+  TITLE: "-= Battlefield GUI =-"
+  STATUE:
+    PRESETED: "Preseted"
+    LOADING: "Loading"
+    RUNNING: "Running"
+    ERROR: "ERROR"
+  BATTLEFIELD_ITEM:
+    DISPLAY_NAME: "§rBattlefield: §b%WORLDNAME"
+    # WARNING(BATTLEFIELD_GUI.BATTLEFIELD_ITEM.DISPLAY_NAME): %WORLDNAME MUST BE PLACED AT THE END OF THE STRING.
+    LORE:
+      PLAYER: "§rPlayer: §d%CURRENTPLAYER/%MAXPLAYER"
+      STATUE: "§rStatue: §b%STATUE"
+      AVAILABLE: "§r§aClick to join"
+
 PLAYER_QUIT_BATTLEFIELD:
   SUCCESS: "§d%PLAYERNAME §ahas successfully quit battlefield §b%WORLDNAME"
-
-PLAYER_ACCELERATE_WORLD_BORDER_SHRINKING:
-  SUCCESS_ANONYMOUS: "§dSomeone §caccelerated the world border's shrinking"
-  SUCCESS: "§d%PLAYERNAME §caccelerated the world border's shrinking"
 
 BATTLE_END:
   WINNER: "-= Winner: §d%PLAYERNAME §r=-"
@@ -38,6 +53,10 @@ PLAYER_USE_COMPASS:
   SPEED: "Speed"
   SURVIVOR: "Survivor Locator"
   ANONYMOUS: "Player"
+
+PLAYER_ACCELERATE_WORLD_BORDER_SHRINKING:
+  SUCCESS_ANONYMOUS: "§dSomeone §caccelerated the world border's shrinking"
+  SUCCESS: "§d%PLAYERNAME §caccelerated the world border's shrinking"
 
 PLAYER_SUMMON_BLAZE:
   SUCCESS: "You have successfully summon a blaze"

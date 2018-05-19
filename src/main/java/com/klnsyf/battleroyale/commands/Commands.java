@@ -112,7 +112,11 @@ public class Commands implements CommandExecutor {
 		if (sender.hasPermission("battleroyale.join")) {
 			if (sender instanceof Player) {
 				if (args.length == 1) {
-					server.getPluginManager().callEvent(new PlayerRequestBattlefieldBookEvent((Player) sender));
+					if (sender.hasPermission("battleroyale.join.battlefieldbook")) {
+						server.getPluginManager().callEvent(new PlayerRequestBattlefieldBookEvent((Player) sender));
+					} else {
+						sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
+					}
 				} else if (args.length == 2) {
 					server.getPluginManager()
 							.callEvent(new PlayerJoinBattlefieldEvent((Player) sender, args[1]));

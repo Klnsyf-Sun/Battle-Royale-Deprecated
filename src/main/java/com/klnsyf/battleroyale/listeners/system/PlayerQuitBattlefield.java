@@ -1,7 +1,6 @@
 package com.klnsyf.battleroyale.listeners.system;
 
 import org.bukkit.Server;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -26,14 +25,10 @@ public class PlayerQuitBattlefield implements Listener {
 			server.getConsoleSender().sendMessage(prefix
 					+ Messages.getMessage(MessageKey.PLAYER_QUIT_BATTLEFIELD_SUCCESS, event.getPlayer().getName(),
 							event.getPlayer().getWorld().getName()));
-			for (Player player : BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).players) {
-				player.sendMessage(prefix
-						+ Messages.getMessage(MessageKey.PLAYER_QUIT_BATTLEFIELD_SUCCESS, event.getPlayer().getName(),
-								event.getPlayer().getWorld().getName()));
-			}
-			BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).players.remove(event.getPlayer());
 			if (BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).alivePlayers.contains(event.getPlayer())) {
 				event.getPlayer().damage(11037);
+			} else {
+				BattlefieldHandler.battlefields.get(event.getPlayer().getWorld()).players.remove(event.getPlayer());
 			}
 		}
 	}

@@ -35,7 +35,9 @@ public class PlayerBreakBlock implements Listener {
 								|| event.getBlock().getDrops(event.getPlayer().getInventory().getItemInMainHand()).size() > 0) {
 							for (Map<String, Integer> item : (ArrayList<Map<String, Integer>>) blockDropList.values()
 									.toArray()[0]) {
-								if (Math.random() * 10000 < (int) item.values().toArray()[0]) {
+								if (Math.random() * (int) configuration.getValue(event.getPlayer().getWorld(),
+										ConfigurationKey.BATTLE_MISC_DROP_LIST_TOTAL_CHANCE) < (int) item.values()
+												.toArray()[0]) {
 									event.getPlayer().getWorld().dropItem(event.getBlock().getLocation(),
 											new ItemStack(Material.getMaterial((String) item.keySet().toArray()[0])));
 								}

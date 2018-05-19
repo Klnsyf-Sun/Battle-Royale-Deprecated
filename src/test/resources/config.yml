@@ -1,9 +1,0 @@
-# ================ Config.yml ================
-# Please make sure the file is intact and all the parameters are valid
-
-# Please use the exact language file name that exists in the folder "language"
-language: en_US
-
-# When enabled, the plugin will automatically detect on startup whether there
-# is a new version and prompts for updates on the console
-enable-update-check: true
