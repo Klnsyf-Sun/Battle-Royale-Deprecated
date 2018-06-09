@@ -13,6 +13,7 @@ import com.klnsyf.battleroyale.events.BattleEndEvent;
 import com.klnsyf.battleroyale.events.BattleLoadEvent;
 import com.klnsyf.battleroyale.events.BattlefieldPresetEvent;
 import com.klnsyf.battleroyale.events.PlayerJoinBattlefieldEvent;
+import com.klnsyf.battleroyale.events.PlayerOpenAdminBoardEvent;
 import com.klnsyf.battleroyale.events.PlayerQuitBattlefieldEvent;
 import com.klnsyf.battleroyale.events.PlayerRequestBattlefieldBookEvent;
 import com.klnsyf.battleroyale.messages.MessageKey;
@@ -112,11 +113,7 @@ public class Commands implements CommandExecutor {
 		if (sender.hasPermission("battleroyale.join")) {
 			if (sender instanceof Player) {
 				if (args.length == 1) {
-					if (sender.hasPermission("battleroyale.join.battlefieldbook")) {
-						server.getPluginManager().callEvent(new PlayerRequestBattlefieldBookEvent((Player) sender));
-					} else {
-						sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
-					}
+					server.getPluginManager().callEvent(new PlayerRequestBattlefieldBookEvent((Player) sender));
 				} else if (args.length == 2) {
 					server.getPluginManager()
 							.callEvent(new PlayerJoinBattlefieldEvent((Player) sender, args[1]));
@@ -172,4 +169,17 @@ public class Commands implements CommandExecutor {
 		}
 	}
 
+	@SubCommand(command = "admin", premission = "battleroyale.admin", des = "Open Admin Board")
+	public void admin(CommandSender sender, String[] args) {
+		if (sender.hasPermission("battleroyale.admin")) {
+			if (args.length == 1) {
+				server.getPluginManager()
+						.callEvent(new PlayerOpenAdminBoardEvent((Player) sender));
+			} else {
+				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcInvaild amount of arguments");
+			}
+		} else {
+			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
+		}
+	}
 }

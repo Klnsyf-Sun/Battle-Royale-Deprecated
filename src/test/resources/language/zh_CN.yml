@@ -40,6 +40,12 @@ BATTLEFIELD_GUI:
       STATUE: "§r状态: §b%STATUE"
       AVAILABLE: "§r§a点击以加入"
 
+ADMIN_BOARD:
+  TITLE: "-= 控制面板 =-"
+  LORE:
+    START: "§r§a左键点击开始战斗"
+    RESET: "§r§a右键点击重置战场"
+
 PLAYER_QUIT_BATTLEFIELD:
   SUCCESS: "§d%PLAYERNAME§a已成功退出战场§b%WORLDNAME"
 

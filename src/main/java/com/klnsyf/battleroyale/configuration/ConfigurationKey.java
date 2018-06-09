@@ -47,7 +47,14 @@ public enum ConfigurationKey {
 	BATTLE_MISC_PLAYER_GLOWING_RADIUS("battle-misc-option.player-glowing-option.radius", int.class, 32),
 	BATTLE_MISC_PLAYER_GLOWING_IGNORE_INVISIBLE("battle-misc-option.player-glowing-option.ignore-invisible", boolean.class,
 			true),
-			;
+	BATTLE_MISC_PLAYER_INVISIBLE_OPTION_ENABLED("battle-misc-option.player-invisible-option.enabled", boolean.class, true),
+	BATTLE_MISC_PLAYER_INVISIBLE_OPTION_ACTIVATE_ITEM("battle-misc-option.player-invisible-option.activate-item", String.class,
+			"COMPASS"),
+	BATTLE_MISC_PLAYER_INVISIBLE_OPTION_DURATION("battle-misc-option.player-invisible-option.duration", int.class, 100),
+	BATTLE_MISC_PLAYER_INVISIBLE_COST_HEALTH("battle-misc-option.player-invisible-option.cost.health", int.class, 0),
+	BATTLE_MISC_PLAYER_INVISIBLE_COST_SATURATION("battle-misc-option.player-invisible-option.cost.saturation", int.class, 1),
+	BATTLE_MISC_PLAYER_INVISIBLE_COST_ITEM("battle-misc-option.player-invisible-option.cost.item", int.class, 0),
+	;
 
 	private String path;
 	private Class<?> clazz;

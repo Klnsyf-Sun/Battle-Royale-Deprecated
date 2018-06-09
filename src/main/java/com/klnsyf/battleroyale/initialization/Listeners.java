@@ -7,10 +7,12 @@ import com.klnsyf.battleroyale.listeners.OreAutoMelt;
 import com.klnsyf.battleroyale.listeners.PlayerAccelerateWorldBorderShrinking;
 import com.klnsyf.battleroyale.listeners.PlayerBreakBlock;
 import com.klnsyf.battleroyale.listeners.PlayerDeath;
+import com.klnsyf.battleroyale.listeners.PlayerInvisible;
 import com.klnsyf.battleroyale.listeners.EntityGlowing;
 import com.klnsyf.battleroyale.listeners.PlayerSummonBlaze;
 import com.klnsyf.battleroyale.listeners.PlayerThrowPrimedTnt;
 import com.klnsyf.battleroyale.listeners.PlayerUseCompass;
+import com.klnsyf.battleroyale.listeners.battlefieldGUI.PlayerOpenAdminBoard;
 import com.klnsyf.battleroyale.listeners.battlefieldGUI.PlayerOpenBattlefieldGUI;
 import com.klnsyf.battleroyale.listeners.battlefieldGUI.PlayerRequestBattlefieldBook;
 import com.klnsyf.battleroyale.listeners.system.BattleEnd;
@@ -46,5 +48,7 @@ public class Listeners {
 		new PlayerSummonBlaze();
 		new PlayerThrowPrimedTnt();
 		new PlayerUseCompass();
+		new PlayerOpenAdminBoard();
+		new PlayerInvisible();
 	}
 }

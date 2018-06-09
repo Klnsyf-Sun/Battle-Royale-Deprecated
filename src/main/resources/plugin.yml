@@ -1,5 +1,5 @@
 name: battleroyale
-version: 1.1.0-SNAPSHOT.6
+version: 1.1.0-SNAPSHOT.7
 load: POSTWORLD
 author: Klnsyf Sun
 main: com.klnsyf.battleroyale.BattleRoyale
@@ -19,13 +19,12 @@ permissions:
       battleroyale.quit: true
       battleroyale.start: true
       battleroyale.reset: true
+      battleroyale.admin: true
       battleroyale.test: true
   battleroyale.preset:
     default: op
   battleroyale.join:
     default: true
-    children: 
-      battleroyale.join.battlefieldbook: true
   battleroyale.join.battlefieldbook:
     default: true
   battleroyale.quit:
@@ -33,6 +32,8 @@ permissions:
   battleroyale.start:
     default: op
   battleroyale.reset:
+    default: op
+  battleroyale.admin:
     default: op
   battleroyale.test:
     default: false

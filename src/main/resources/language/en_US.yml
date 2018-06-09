@@ -40,6 +40,12 @@ BATTLEFIELD_GUI:
       STATUE: "§rStatue: §b%STATUE"
       AVAILABLE: "§r§aClick to join"
 
+ADMIN_BOARD:
+  TITLE: "-= Admin Board =-"
+  LORE:
+    START: "§r§aLeft Click to Start Battle"
+    RESET: "§r§aRight Click to Reset Battlefield"
+
 PLAYER_QUIT_BATTLEFIELD:
   SUCCESS: "§d%PLAYERNAME §ahas successfully quit battlefield §b%WORLDNAME"
 

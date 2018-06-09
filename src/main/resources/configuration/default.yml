@@ -52,6 +52,14 @@ battle-misc-option:
     duration: 20    # Integer
     radius: 32.0    # Double
     ignore-invisible: true    # Boolean("true" OR "false", IgnoreCase)
+  player-invisible-option:
+    enabled: true
+    activate-item: COMPASS
+    duration: 100
+    cost:
+      health: 1
+      saturation: 0
+      item: 0
   summon-blaze:
     enabled: true    # Boolean("true" OR "false", IgnoreCase)
   deathmatch:

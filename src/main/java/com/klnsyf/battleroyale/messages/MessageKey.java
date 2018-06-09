@@ -133,7 +133,17 @@ public enum MessageKey {
 
 	// ¡ìr¡ìaClick to join
 	BATTLEFIELD_GUI_BATTLEFIELD_ITEM_LORE_AVAILABLE("BATTLEFIELD_GUI.BATTLEFIELD_ITEM.LORE.AVAILABLE"),
+
+	// -= Admin Board =-
+	ADMIN_BOARD_TITLE("ADMIN_BOARD.TITLE"),
+
+	// ¡ìr¡ìaLeft Click to Start Battle
+	ADMIN_BOARD_LORE_START("ADMIN_BOARD.LORE.START"),
+
+	// ¡ìr¡ìaRight Click to Reset Battlefield
+	ADMIN_BOARD_LORE_RESET("ADMIN_BOARD.LORE.RESET"),
 	;
+
 	private String key;
 	private String[] tags;
 
