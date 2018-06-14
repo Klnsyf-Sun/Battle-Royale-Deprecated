@@ -15,6 +15,7 @@ import com.klnsyf.battleroyale.BattleRoyale;
 import com.klnsyf.battleroyale.battlefield.BattlefieldConfiguration;
 import com.klnsyf.battleroyale.battlefield.BattlefieldHandler;
 import com.klnsyf.battleroyale.configuration.Configuration;
+import com.klnsyf.battleroyale.configuration.ConfigurationChecker;
 import com.klnsyf.battleroyale.configuration.ConfigurationKey;
 import com.klnsyf.battleroyale.events.BattlefieldPresetEvent;
 import com.klnsyf.battleroyale.messages.MessageKey;
@@ -51,6 +52,8 @@ public class BattlefieldPreset implements Listener {
 			} else {
 				new YamlConfiguration();
 				YamlConfiguration configurationFile = YamlConfiguration.loadConfiguration(file);
+				int checker = new ConfigurationChecker().configuationChecker(configurationFile, true);
+				event.getSender().sendMessage(prefix + "¡ìaFile integrity check completed with ¡ìb" + checker + "¡ìa ERROR(s)");
 				BattlefieldHandler.battlefields.put(world, new BattlefieldConfiguration(configurationFile));
 				BattlefieldHandler.battlefields.get(world).setSpreadLocations(spreadAttempt(
 						configuation.getValue(world, ConfigurationKey.PLAYER_SPREAD_ATTEMPT_TIMES),

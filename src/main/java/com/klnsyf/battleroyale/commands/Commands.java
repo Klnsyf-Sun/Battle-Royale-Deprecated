@@ -1,14 +1,17 @@
 package com.klnsyf.battleroyale.commands;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.klnsyf.battleroyale.BattleRoyale;
+import com.klnsyf.battleroyale.configuration.ConfigurationChecker;
 import com.klnsyf.battleroyale.events.BattleEndEvent;
 import com.klnsyf.battleroyale.events.BattleLoadEvent;
 import com.klnsyf.battleroyale.events.BattlefieldPresetEvent;
@@ -175,6 +178,29 @@ public class Commands implements CommandExecutor {
 			if (args.length == 1) {
 				server.getPluginManager()
 						.callEvent(new PlayerOpenAdminBoardEvent((Player) sender));
+			} else {
+				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcInvaild amount of arguments");
+			}
+		} else {
+			sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcYou do not have permission to use this command");
+		}
+	}
+
+	@SubCommand(command = "check", premission = "battleroyale.check", arg = "[fileName]", des = "Check File Integrity")
+	public void check(CommandSender sender, String[] args) {
+		if (sender.hasPermission("battleroyale.check")) {
+			if (args.length == 2) {
+				File file = new File(
+						BattleRoyale.dataFolder.getPath() + "\\configuration\\" + args[1] + ".yml");
+				if (!file.exists()) {
+					sender.sendMessage(prefix + Messages
+							.getMessage(MessageKey.BATTLEFIELD_PRESET_UNDEFINDED_CONFIGURATIONFILE, args[1]));
+				} else {
+					new YamlConfiguration();
+					YamlConfiguration configurationFile = YamlConfiguration.loadConfiguration(file);
+					int checker = new ConfigurationChecker().configuationChecker(configurationFile, false);
+					sender.sendMessage(prefix + "¡ìaFile integrity check completed with ¡ìb" + checker + "¡ìa ERROR(s)");
+				}
 			} else {
 				sender.sendMessage("[¡ì6Battle Royale¡ìr] ¡ìcInvaild amount of arguments");
 			}
