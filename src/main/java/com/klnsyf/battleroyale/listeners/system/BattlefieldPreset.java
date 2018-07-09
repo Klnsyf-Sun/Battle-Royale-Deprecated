@@ -1,11 +1,9 @@
 package com.klnsyf.battleroyale.listeners.system;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,61 +31,42 @@ public class BattlefieldPreset implements Listener {
 
 	@EventHandler
 	public void onBattlefieldPreset(BattlefieldPresetEvent event) {
-		World world = server.getWorld(event.getWorldName());
-		if (world == null) {
-			event.getSender()
-					.sendMessage(prefix + Messages.getMessage(MessageKey.COMMANDS_UNDEFINDED_WORLD, event.getWorldName()));
-			event.setCancelled(true);
-		} else if (BattlefieldHandler.battlefields.containsKey(world)) {
-			event.getSender()
-					.sendMessage(prefix + Messages.getMessage(MessageKey.COMMANDS_WORLD_PRESETTED, event.getWorldName()));
-			event.setCancelled(true);
-		} else {
-			File file = new File(
-					BattleRoyale.dataFolder.getPath() + "\\configuration\\" + event.getConfigName() + ".yml");
-			if (!file.exists()) {
-				event.getSender().sendMessage(prefix + Messages
-						.getMessage(MessageKey.BATTLEFIELD_PRESET_UNDEFINDED_CONFIGURATIONFILE, event.getConfigName()));
-				event.setCancelled(true);
-			} else {
-				new YamlConfiguration();
-				YamlConfiguration configurationFile = YamlConfiguration.loadConfiguration(file);
-				int checker = new ConfigurationChecker().configuationChecker(configurationFile, true);
-				event.getSender().sendMessage(prefix + "¡ìaFile integrity check completed with ¡ìb" + checker + "¡ìa ERROR(s)");
-				BattlefieldHandler.battlefields.put(world, new BattlefieldConfiguration(configurationFile));
-				BattlefieldHandler.battlefields.get(world).setSpreadLocations(spreadAttempt(
-						configuation.getValue(world, ConfigurationKey.PLAYER_SPREAD_ATTEMPT_TIMES),
-						configuation.getValue(world, ConfigurationKey.PLAYER_SPREAD_MIN_RANGE),
-						configuation.getValue(world, ConfigurationKey.PLAYER_SPREAD_MAX_RANGE),
-						configuation.getValue(world, ConfigurationKey.PLAYER_SPREAD_RADIUS),
-						configuation.getValue(world, ConfigurationKey.PLAYER_SPREAD_MIN_RELATIVE_SPACE)));
-				BattlefieldHandler.battlefields.get(world)
-						.setMaxPlayer(Math.min(BattlefieldHandler.battlefields.get(world).getSpreadLocations().size(),
-								event.getMaxPlayer()));
-				BattlefieldHandler.battlefields.get(world).setAutoStart(event.isAutoStart());
-				server.getConsoleSender()
-						.sendMessage(prefix + Messages.getMessage(MessageKey.BATTLEFIELD_PRESET_SUCCESS_CONSOLE,
-								event.getWorldName(), event.getConfigName(),
-								BattlefieldHandler.battlefields.get(world).getMaxPlayer() + ""));
-				world.setSpawnLocation(world.getHighestBlockAt(0, 0).getLocation().add(0, 1, 0));
-				for (Player player : server.getOnlinePlayers()) {
-					if (BattlefieldHandler.battlefields.containsKey(player.getWorld())) {
-						if (BattlefieldHandler.battlefields.get(player.getWorld()).players.contains(player)) {
-						} else {
-							player.sendMessage(
-									prefix + Messages.getMessage(MessageKey.BATTLEFIELD_PRESET_SUCCESS_PLAYER,
-											event.getWorldName(),
-											BattlefieldHandler.battlefields.get(world).getMaxPlayer() + ""));
-						}
-					} else {
-						player.sendMessage(
-								prefix + Messages.getMessage(MessageKey.BATTLEFIELD_PRESET_SUCCESS_PLAYER,
-										event.getWorldName(),
-										BattlefieldHandler.battlefields.get(world).getMaxPlayer() + ""));
-					}
+		YamlConfiguration configFile = event.getConfigFile();
+		int checker = new ConfigurationChecker().configuationChecker(configFile, true);
+		server.getConsoleSender().sendMessage(prefix + "¡ìaFile integrity check completed with ¡ìb" + checker + "¡ìa ERROR(s)");
+		BattlefieldHandler.battlefields.put(event.getWorld(), new BattlefieldConfiguration(configFile));
+		BattlefieldHandler.battlefields.get(event.getWorld()).setSpreadLocations(spreadAttempt(
+				configuation.getValue(event.getWorld(), ConfigurationKey.PLAYER_SPREAD_ATTEMPT_TIMES),
+				configuation.getValue(event.getWorld(), ConfigurationKey.PLAYER_SPREAD_MIN_RANGE),
+				configuation.getValue(event.getWorld(), ConfigurationKey.PLAYER_SPREAD_MAX_RANGE),
+				configuation.getValue(event.getWorld(), ConfigurationKey.PLAYER_SPREAD_RADIUS),
+				configuation.getValue(event.getWorld(), ConfigurationKey.PLAYER_SPREAD_MIN_RELATIVE_SPACE)));
+		BattlefieldHandler.battlefields.get(event.getWorld())
+				.setMaxPlayer(Math.min(BattlefieldHandler.battlefields.get(event.getWorld()).getSpreadLocations().size(),
+						event.getMaxPlayer()));
+		BattlefieldHandler.battlefields.get(event.getWorld()).setAutoStart(event.isAutoStart());
+		server.getConsoleSender()
+				.sendMessage(prefix + Messages.getMessage(MessageKey.BATTLEFIELD_PRESET_SUCCESS_CONSOLE,
+						event.getWorld().getName(), event.getConfigFile().getName(),
+						BattlefieldHandler.battlefields.get(event.getWorld()).getMaxPlayer() + ""));
+		event.getWorld().setSpawnLocation(event.getWorld().getHighestBlockAt(0, 0).getLocation().add(0, 1, 0));
+		for (Player player : server.getOnlinePlayers()) {
+			if (BattlefieldHandler.battlefields.containsKey(player.getWorld())) {
+				if (BattlefieldHandler.battlefields.get(player.getWorld()).players.contains(player)) {
+				} else {
+					player.sendMessage(
+							prefix + Messages.getMessage(MessageKey.BATTLEFIELD_PRESET_SUCCESS_PLAYER,
+									event.getWorld().getName(),
+									BattlefieldHandler.battlefields.get(event.getWorld()).getMaxPlayer() + ""));
 				}
+			} else {
+				player.sendMessage(
+						prefix + Messages.getMessage(MessageKey.BATTLEFIELD_PRESET_SUCCESS_PLAYER,
+								event.getWorld().getName(),
+								BattlefieldHandler.battlefields.get(event.getWorld()).getMaxPlayer() + ""));
 			}
 		}
+
 	}
 
 	private ArrayList<Double> spreadAttempt(int attempt, int minRange, int maxRange, int spreadDistance,

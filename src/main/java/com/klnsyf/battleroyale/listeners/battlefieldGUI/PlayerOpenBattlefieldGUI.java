@@ -127,10 +127,10 @@ public class PlayerOpenBattlefieldGUI implements Listener {
 				if (event.getCurrentItem().getItemMeta().getLore()
 						.contains((String) Messages.getMessage(MessageKey.BATTLEFIELD_GUI_BATTLEFIELD_ITEM_LORE_AVAILABLE))) {
 					server.getPluginManager().callEvent(new PlayerJoinBattlefieldEvent((Player) event.getWhoClicked(),
-							event.getCurrentItem().getItemMeta().getDisplayName()
+							server.getWorld(event.getCurrentItem().getItemMeta().getDisplayName()
 									.replaceAll(Messages
 											.getMessage(MessageKey.BATTLEFIELD_GUI_BATTLEFIELD_ITEM_DISPLAY_NAME, "%WORLDNAME")
-											.replaceAll("%WORLDNAME", ""), "")));
+											.replaceAll("%WORLDNAME", ""), ""))));
 					ItemStack battlefieldBook = new ItemStack(Material.BOOK);
 					ItemMeta battlefieldBookMeta = battlefieldBook.getItemMeta();
 					battlefieldBookMeta.setDisplayName(Messages.getMessage(MessageKey.BATTLEFIELD_BOOK_DISPLAY_NAME));

@@ -33,7 +33,6 @@ import com.klnsyf.battleroyale.utils.WorldBorderHandler;
 public class BattleLoad implements Listener {
 	private final BattleRoyale plugin = BattleRoyale.plugin;
 	private final Server server = BattleRoyale.server;
-	private final String prefix = BattleRoyale.prefix;
 	private final Configuration configuation = new Configuration();
 
 	public BattleLoad() {
@@ -41,18 +40,14 @@ public class BattleLoad implements Listener {
 	}
 
 	@EventHandler
-	public void onBattleLoad(BattleLoadEvent event) {
-		World world = server.getWorld(event.getWorldName());
-		if (world == null) {
-			event.getSender()
-					.sendMessage(prefix + Messages.getMessage(MessageKey.COMMANDS_UNDEFINDED_WORLD, event.getWorldName()));
+	public boolean onBattleLoad(BattleLoadEvent event) {
+		World world = event.getWorld();
+		if (!BattlefieldHandler.battlefields.containsKey(world)) {
 			event.setCancelled(true);
-		} else if (!BattlefieldHandler.battlefields.containsKey(world)) {
-			event.getSender()
-					.sendMessage(prefix + Messages.getMessage(MessageKey.COMMANDS_WORLD_UNPRESETTED, event.getWorldName()));
-			event.setCancelled(true);
+			return false;
 		} else {
-			BattlefieldHandler.battlefields.get(world).alivePlayers = BattlefieldHandler.battlefields.get(world).players;
+			BattlefieldHandler.battlefields.get(world).alivePlayers = BattlefieldHandler.battlefields
+					.get(world).players;
 			gameruleReset(world);
 			new WorldBorderHandler(world).initWorldBorder(0,
 					0,
@@ -64,6 +59,7 @@ public class BattleLoad implements Listener {
 			playersSpread(world);
 			countDown(world);
 			BattlefieldHandler.battlefields.get(world).setStatue(1);
+			return true;
 		}
 	}
 
@@ -103,7 +99,7 @@ public class BattleLoad implements Listener {
 			location.setY(location.getY() + 2);
 			player.teleport(location);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1103700, 127, false, false));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 1103700, 255, false, false));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1103700, 128, false, false));
 		}
 	}
 

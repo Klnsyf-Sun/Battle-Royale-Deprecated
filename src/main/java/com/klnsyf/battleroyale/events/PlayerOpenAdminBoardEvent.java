@@ -11,7 +11,6 @@ public class PlayerOpenAdminBoardEvent extends Event implements Cancellable {
 	private final Player player;
 
 	public PlayerOpenAdminBoardEvent(Player player) {
-		super(false);
 		this.player = player;
 	}
 

@@ -15,7 +15,6 @@ public class PlayerSummonBlazeEvent extends Event implements Cancellable {
 	private final World world;
 
 	public PlayerSummonBlazeEvent(Player player, Block block) {
-		super(false);
 		this.player = player;
 		this.block = block;
 		this.world = player.getWorld();

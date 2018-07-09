@@ -12,10 +12,9 @@ public class PlayerInvisibleEvent extends Event implements Cancellable {
 	private final World world;
 	private final Player player;
 
-	public PlayerInvisibleEvent(World world, Player player) {
-		super(false);
-		this.world = world;
+	public PlayerInvisibleEvent(Player player) {
 		this.player = player;
+		this.world = player.getWorld();
 	}
 
 	@Override

@@ -13,7 +13,6 @@ public class PlayerThrowPrimedTntEvent extends Event implements Cancellable {
 	private final World world;
 
 	public PlayerThrowPrimedTntEvent(Player player) {
-		super(false);
 		this.player = player;
 		this.world = player.getWorld();
 	}

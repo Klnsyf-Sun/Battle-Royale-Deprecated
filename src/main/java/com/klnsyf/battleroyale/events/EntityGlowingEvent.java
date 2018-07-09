@@ -12,10 +12,9 @@ public class EntityGlowingEvent extends Event implements Cancellable {
 	private final World world;
 	private final Player player;
 
-	public EntityGlowingEvent(World world, Player player) {
-		super(false);
-		this.world = world;
+	public EntityGlowingEvent(Player player) {
 		this.player = player;
+		this.world = player.getWorld();
 	}
 
 	@Override

@@ -11,7 +11,6 @@ public class PlayerRequestBattlefieldBookEvent extends Event implements Cancella
 	private final Player player;
 
 	public PlayerRequestBattlefieldBookEvent(Player player) {
-		super(false);
 		this.player = player;
 	}
 

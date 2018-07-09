@@ -11,7 +11,6 @@ public class BattleStartEvent extends Event implements Cancellable {
 	private final World world;
 
 	public BattleStartEvent(World world) {
-		super(false);
 		this.world = world;
 	}
 

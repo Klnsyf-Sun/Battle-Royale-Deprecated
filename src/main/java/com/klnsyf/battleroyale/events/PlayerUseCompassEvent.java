@@ -13,7 +13,6 @@ public class PlayerUseCompassEvent extends Event implements Cancellable {
 	private final World world;
 
 	public PlayerUseCompassEvent(Player player) {
-		super(false);
 		this.player = player;
 		this.world = player.getWorld();
 	}

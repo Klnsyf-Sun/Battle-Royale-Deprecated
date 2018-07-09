@@ -60,11 +60,11 @@ public class PlayerDeath implements Listener {
 				BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.remove(event.getEntity());
 				if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.size() == 1) {
 					server.getPluginManager()
-							.callEvent(new BattleEndEvent(server.getConsoleSender(), event.getEntity().getWorld(),
+							.callEvent(new BattleEndEvent(event.getEntity().getWorld(),
 									BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.get(0)));
 				} else if (BattlefieldHandler.battlefields.get(event.getEntity().getWorld()).alivePlayers.size() < 1) {
 					server.getPluginManager()
-							.callEvent(new BattleEndEvent(server.getConsoleSender(), event.getEntity().getWorld(),
+							.callEvent(new BattleEndEvent(event.getEntity().getWorld(),
 									null));
 
 				}

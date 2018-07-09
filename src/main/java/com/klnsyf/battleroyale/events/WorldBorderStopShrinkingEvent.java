@@ -11,7 +11,6 @@ public class WorldBorderStopShrinkingEvent extends Event implements Cancellable 
 	private final World world;
 
 	public WorldBorderStopShrinkingEvent(World world) {
-		super(false);
 		this.world = world;
 	}
 

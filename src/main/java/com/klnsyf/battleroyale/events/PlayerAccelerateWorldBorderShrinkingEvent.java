@@ -13,7 +13,6 @@ public class PlayerAccelerateWorldBorderShrinkingEvent extends Event implements 
 	private final World world;
 
 	public PlayerAccelerateWorldBorderShrinkingEvent(Player player) {
-		super(false);
 		this.player = player;
 		this.world = player.getWorld();
 	}

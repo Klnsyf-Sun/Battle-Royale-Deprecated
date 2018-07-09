@@ -129,15 +129,15 @@ public class PlayerOpenAdminBoard implements Listener {
 				if (event.getCurrentItem().getItemMeta().getLore()
 						.contains(Messages.getMessage(MessageKey.ADMIN_BOARD_LORE_START))
 						&& event.getClick() == ClickType.LEFT) {
-					server.getPluginManager().callEvent(new BattleLoadEvent(event.getWhoClicked(),
+					server.getPluginManager().callEvent(new BattleLoadEvent(server.getWorld(
 							event.getCurrentItem().getItemMeta().getDisplayName()
 									.replaceAll(Messages
 											.getMessage(MessageKey.BATTLEFIELD_GUI_BATTLEFIELD_ITEM_DISPLAY_NAME, "%WORLDNAME")
-											.replaceAll("%WORLDNAME", ""), "")));
+											.replaceAll("%WORLDNAME", ""), ""))));
 				} else if (event.getCurrentItem().getItemMeta().getLore()
 						.contains(Messages.getMessage(MessageKey.ADMIN_BOARD_LORE_RESET))
 						&& event.getClick() == ClickType.RIGHT) {
-					server.getPluginManager().callEvent(new BattleEndEvent(event.getWhoClicked(),
+					server.getPluginManager().callEvent(new BattleEndEvent(
 							server.getWorld(event.getCurrentItem().getItemMeta().getDisplayName()
 									.replaceAll(Messages
 											.getMessage(MessageKey.BATTLEFIELD_GUI_BATTLEFIELD_ITEM_DISPLAY_NAME, "%WORLDNAME")

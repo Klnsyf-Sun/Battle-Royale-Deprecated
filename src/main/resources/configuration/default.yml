@@ -1,5 +1,6 @@
-# WARN: Please check the Type, MUST be EXACT as the Type given
-# Example: For an entry needs Type Double, you MUST use 40.0 not 40
+# WARN: Please check all the parameter, they MUST be EXACT as the type given
+# Example: For an entry needs type Double(like player-generic-option.max-health), you MUST use 40.0 not 40
+# You can use command "/battleroyale check [fileName]" to check this file
 player-generic-option:
   max-health: 40.0    # Double
 player-spread-option:
@@ -53,17 +54,17 @@ battle-misc-option:
     radius: 32.0    # Double
     ignore-invisible: true    # Boolean("true" OR "false", IgnoreCase)
   player-invisible-option:
-    enabled: true
-    activate-item: COMPASS
-    duration: 100
+    enabled: true    # Boolean("true" OR "false", IgnoreCase)
+    activate-item: COMPASS    # Material
+    duration: 100    # Integer
     cost:
-      health: 1
-      saturation: 0
-      item: 0
+      health: 1    # Integer
+      saturation: 0    # Integer
+      item: 0    # Integer(MUST be "0" OR "1")
   summon-blaze:
     enabled: true    # Boolean("true" OR "false", IgnoreCase)
   deathmatch:
-    enabled: true    # Boolean("true" OR "false", IgnoreCase
+    enabled: true    # Boolean("true" OR "false", IgnoreCase)
   killer-bonus:
     health: 5    # Integer
     saturation: 5    # Integer

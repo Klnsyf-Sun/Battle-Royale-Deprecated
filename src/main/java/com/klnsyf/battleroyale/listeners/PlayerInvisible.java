@@ -60,7 +60,7 @@ public class PlayerInvisible implements Listener {
 																ConfigurationKey.BATTLE_MISC_PLAYER_INVISIBLE_COST_HEALTH),
 														0));
 										server.getPluginManager().callEvent(
-												new PlayerInvisibleEvent(event.getPlayer().getWorld(), event.getPlayer()));
+												new PlayerInvisibleEvent(event.getPlayer()));
 									}
 								}
 							}.runTaskTimer(plugin, 0,

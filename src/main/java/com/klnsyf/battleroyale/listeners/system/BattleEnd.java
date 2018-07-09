@@ -22,7 +22,8 @@ public class BattleEnd implements Listener {
 	}
 
 	@EventHandler
-	public void onBattleEnd(BattleEndEvent event) {
+	public boolean onBattleEnd(BattleEndEvent event) {
+		boolean isForceEnd=false;
 		if (event.getWinner() != null) {
 			for (Player player : BattlefieldHandler.battlefields.get(event.getWorld()).players) {
 				player.sendTitle("[¡ì6Battle Royale¡ì]",
@@ -31,9 +32,11 @@ public class BattleEnd implements Listener {
 			}
 		} else {
 			server.getConsoleSender().sendMessage(prefix + Messages.getMessage(MessageKey.BATTLE_END_FORCED_END));
+			isForceEnd=true;
 		}
 		event.getWorld().setDifficulty(Difficulty.PEACEFUL);
 		BattlefieldHandler.battlefields.remove(event.getWorld());
+		return isForceEnd;
 	}
 
 }

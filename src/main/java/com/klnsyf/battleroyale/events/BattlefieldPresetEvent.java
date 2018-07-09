@@ -1,54 +1,51 @@
 package com.klnsyf.battleroyale.events;
 
-import org.bukkit.command.CommandSender;
+import java.io.File;
+
+import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+import com.klnsyf.battleroyale.BattleRoyale;
+
 public class BattlefieldPresetEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
-	private final CommandSender sender;
-	private final String worldName;
-	private final String configName;
+	private final World world;
+	private final YamlConfiguration configFile;
 	private final int maxPlayer;
-	private final boolean autoStart;
-	private final String DEFAULT_CONFIG_NAME = "default";
+	private final boolean isAutoStart;
 
-	public BattlefieldPresetEvent(CommandSender sender, String worldName, String configName, int maxPlayer, boolean autoStart) {
-		super(false);
-		this.sender = sender;
-		this.worldName = worldName;
-		this.configName = configName;
+	public BattlefieldPresetEvent(World world, YamlConfiguration configFile, int maxPlayer, boolean isAutoStart) {
+		this.world = world;
+		this.configFile = configFile;
 		this.maxPlayer = maxPlayer;
-		this.autoStart = autoStart;
+		this.isAutoStart = isAutoStart;
 	}
 
-	public BattlefieldPresetEvent(CommandSender sender, String worldName) {
-		super(false);
-		this.sender = sender;
-		this.worldName = worldName;
-		this.configName = DEFAULT_CONFIG_NAME;
-		this.maxPlayer = Integer.MAX_VALUE;
-		this.autoStart = false;
-	}
-
-	public BattlefieldPresetEvent(CommandSender sender, String worldName, String configName) {
-		super(false);
-		this.sender = sender;
-		this.worldName = worldName;
-		this.configName = configName;
-		this.maxPlayer = Integer.MAX_VALUE;
-		this.autoStart = false;
-	}
-
-	public BattlefieldPresetEvent(CommandSender sender, String worldName, String configName, int maxPlayer) {
-		super(false);
-		this.sender = sender;
-		this.worldName = worldName;
-		this.configName = configName;
+	public BattlefieldPresetEvent(World world, YamlConfiguration configFile, int maxPlayer) {
+		this.world = world;
+		this.configFile = configFile;
 		this.maxPlayer = maxPlayer;
-		this.autoStart = false;
+		this.isAutoStart = false;
+	}
+
+	public BattlefieldPresetEvent(World world, YamlConfiguration configFile) {
+		this.world = world;
+		this.configFile = configFile;
+		this.maxPlayer = Integer.MAX_VALUE;
+		this.isAutoStart = false;
+	}
+
+	public BattlefieldPresetEvent(World world) {
+		this.world = world;
+		new YamlConfiguration();
+		this.configFile = YamlConfiguration
+				.loadConfiguration(new File(BattleRoyale.dataFolder.getPath() + "\\configuration\\default.yml"));
+		this.maxPlayer = Integer.MAX_VALUE;
+		this.isAutoStart = false;
 	}
 
 	@Override
@@ -70,16 +67,12 @@ public class BattlefieldPresetEvent extends Event implements Cancellable {
 		return handlers;
 	}
 
-	public CommandSender getSender() {
-		return sender;
+	public World getWorld() {
+		return world;
 	}
 
-	public String getWorldName() {
-		return worldName;
-	}
-
-	public String getConfigName() {
-		return configName;
+	public YamlConfiguration getConfigFile() {
+		return configFile;
 	}
 
 	public int getMaxPlayer() {
@@ -87,7 +80,7 @@ public class BattlefieldPresetEvent extends Event implements Cancellable {
 	}
 
 	public boolean isAutoStart() {
-		return autoStart;
+		return isAutoStart;
 	}
 
 }

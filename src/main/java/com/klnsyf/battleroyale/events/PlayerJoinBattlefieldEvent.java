@@ -1,5 +1,6 @@
 package com.klnsyf.battleroyale.events;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -9,12 +10,11 @@ public class PlayerJoinBattlefieldEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
 	private final Player player;
-	private final String worldName;
+	private final World world;
 
-	public PlayerJoinBattlefieldEvent(Player player, String worldName) {
-		super(false);
+	public PlayerJoinBattlefieldEvent(Player player, World world) {
 		this.player = player;
-		this.worldName = worldName;
+		this.world = world;
 	}
 
 	@Override
@@ -40,7 +40,8 @@ public class PlayerJoinBattlefieldEvent extends Event implements Cancellable {
 		return player;
 	}
 
-	public String getWorldName() {
-		return worldName;
+	public World getWorld() {
+		return world;
 	}
+
 }

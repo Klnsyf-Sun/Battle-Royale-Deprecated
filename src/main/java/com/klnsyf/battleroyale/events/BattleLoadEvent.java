@@ -1,6 +1,6 @@
 package com.klnsyf.battleroyale.events;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.World;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -8,13 +8,10 @@ import org.bukkit.event.HandlerList;
 public class BattleLoadEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
-	private final CommandSender sender;
-	private final String worldName;
+	private final World world;
 
-	public BattleLoadEvent(CommandSender sender, String worldName) {
-		super(false);
-		this.sender = sender;
-		this.worldName = worldName;
+	public BattleLoadEvent(World world) {
+		this.world = world;
 	}
 
 	@Override
@@ -36,12 +33,8 @@ public class BattleLoadEvent extends Event implements Cancellable {
 		return handlers;
 	}
 
-	public CommandSender getSender() {
-		return sender;
-	}
-
-	public String getWorldName() {
-		return worldName;
+	public World getWorld() {
+		return world;
 	}
 
 }

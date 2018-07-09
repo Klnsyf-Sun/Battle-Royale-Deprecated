@@ -11,7 +11,6 @@ public class PlayerOpenBattlefieldGUIEvent extends Event implements Cancellable 
 	private final Player player;
 
 	public PlayerOpenBattlefieldGUIEvent(Player player) {
-		super(false);
 		this.player = player;
 	}
 

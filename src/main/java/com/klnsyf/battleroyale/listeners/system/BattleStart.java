@@ -35,14 +35,14 @@ public class BattleStart implements Listener {
 
 	@EventHandler
 	public void onBattleStart(BattleStartEvent event) {
-		gameNotice(event.getWorld());
-		playersReset(event.getWorld());
-		initSupply(event.getWorld());
-		new WorldBorderHandler(event.getWorld()).controlWorldBorder(
-				configuation.getValue(event.getWorld(), ConfigurationKey.WORLD_BORDER_MIN_RADIUS),
-				(double) configuation.getValue(event.getWorld(), ConfigurationKey.WORLD_BORDER_SHRINK_SPEED));
-		BattlefieldHandler.battlefields.get(event.getWorld()).setStatue(2);
-
+		World world = event.getWorld();
+		gameNotice(world);
+		playersReset(world);
+		initSupply(world);
+		new WorldBorderHandler(world).controlWorldBorder(
+				configuation.getValue(world, ConfigurationKey.WORLD_BORDER_MIN_RADIUS),
+				(double) configuation.getValue(world, ConfigurationKey.WORLD_BORDER_SHRINK_SPEED));
+		BattlefieldHandler.battlefields.get(world).setStatue(2);
 	}
 
 	@SuppressWarnings("deprecation")

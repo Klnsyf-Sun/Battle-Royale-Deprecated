@@ -50,7 +50,7 @@ public class EntityGlowing implements Listener {
 										event.getPlayer().getInventory().getItemInOffHand()
 												.setAmount(event.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
 										server.getPluginManager().callEvent(
-												new EntityGlowingEvent(event.getPlayer().getWorld(), event.getPlayer()));
+												new EntityGlowingEvent(event.getPlayer()));
 									}
 								}
 							}.runTaskTimer(plugin, 0,

@@ -11,7 +11,6 @@ public class PlayerQuitBattlefieldEvent extends Event implements Cancellable {
 	private final Player player;
 
 	public PlayerQuitBattlefieldEvent(Player player) {
-		super(false);
 		this.player = player;
 	}
 
